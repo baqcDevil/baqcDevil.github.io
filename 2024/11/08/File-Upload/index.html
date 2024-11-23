@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="文件上传漏洞  原理：如果对文件上传的路径变量过滤不严，并且对上传文件的后缀或者文件类型限制不严，用户可以通过web访问的目录任意上传文件，包括网站后门文件（webshell），进而远程控制网站服务器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="File_Upload">
+<meta property="og:url" content="http://example.com/2024/11/08/File-Upload/index.html">
+<meta property="og:site_name" content="Xorb_7&#39;s Blog">
+<meta property="og:description" content="文件上传漏洞  原理：如果对文件上传的路径变量过滤不严，并且对上传文件的后缀或者文件类型限制不严，用户可以通过web访问的目录任意上传文件，包括网站后门文件（webshell），进而远程控制网站服务器">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/4.jpg">
+<meta property="article:published_time" content="2024-11-08T09:40:11.000Z">
+<meta property="article:modified_time" content="2024-11-23T16:03:32.523Z">
+<meta property="article:author" content="Xorb_7">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/4.jpg">
+
+
+<link rel="canonical" href="http://example.com/2024/11/08/File-Upload/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/08/File-Upload/","path":"2024/11/08/File-Upload/","title":"File_Upload"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>File_Upload | Xorb_7's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Xorb_7's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-link"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.</span> <span class="nav-text">文件上传漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E6%A0%A1%E9%AA%8C%E7%9A%84%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.1.</span> <span class="nav-text">基于文件校验的漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF"><span class="nav-number">1.2.</span> <span class="nav-text">前端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JS%E8%BF%87%E6%BB%A4%E7%BB%95%E8%BF%87"><span class="nav-number">1.2.1.</span> <span class="nav-text">JS过滤绕过</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF"><span class="nav-number">1.3.</span> <span class="nav-text">后端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95"><span class="nav-number">1.3.1.</span> <span class="nav-text">黑名单</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%90%8D%E8%BF%87%E6%BB%A4%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">文件名过滤绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#htaccess%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">.htaccess文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%80%E5%90%AFhtacces%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.1.2.1.</span> <span class="nav-text">开启htacces配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.1.2.2.</span> <span class="nav-text">利用过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%82%B9%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">点绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">空格绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DATA%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">::$DATA绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8C%E5%90%8E%E7%BC%80%E5%90%8D%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.1.6.</span> <span class="nav-text">双后缀名绕过</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BD%E5%90%8D%E5%8D%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">白名单</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Type%E8%BF%87%E6%BB%A4%E7%BB%95%E8%BF%87%EF%BC%88MIME%E7%BB%95%E8%BF%87%EF%BC%89"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Content-Type过滤绕过（MIME绕过）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4%E8%BF%87%E6%BB%A4%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">文件头过滤绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%88%AA%E6%96%AD%E4%B8%8A%E4%BC%A0"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">文件截断上传</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E7%9A%84%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.4.</span> <span class="nav-text">基于文件处理的漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="nav-number">1.4.1.</span> <span class="nav-text">条件竞争</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93"><span class="nav-number">1.4.2.</span> <span class="nav-text">二次渲染</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E7%9A%84%E6%BC%8F%E6%B4%9E%EF%BC%88%E4%B8%AD%E9%97%B4%E4%BB%B6%E8%A7%A3%E6%9E%90%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">基于文件解析的漏洞（中间件解析）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IIS%E7%AF%87"><span class="nav-number">1.5.1.</span> <span class="nav-text">IIS篇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%9B%E6%88%AA%E6%96%AD"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">；截断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IIS6-0%E7%89%88%E6%9C%AC-%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E5%A4%B9%E6%8B%93%E5%B1%95%E5%90%8D%E5%87%BA%E9%94%99"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">IIS6.0版本 处理文件夹拓展名出错</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebDav%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">WebDav漏洞</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APACHE%E7%AF%87"><span class="nav-number">1.5.2.</span> <span class="nav-text">APACHE篇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#apache%E4%BD%8E%E7%89%88%E6%9C%AC%EF%BC%882-x%EF%BC%89"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">apache低版本（2.x）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apache%E6%8D%A2%E8%A1%8C%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E%EF%BC%882-4-0%E2%80%932-4-29%EF%BC%89"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">apache换行解析漏洞（2.4.0–2.4.29）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NGINX%E7%AF%87"><span class="nav-number">1.5.3.</span> <span class="nav-text">NGINX篇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Nginx%E4%BD%8E%E7%89%88%E6%9C%AC%E3%80%81IIS7-x"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">Nginx低版本、IIS7.x</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nginx%E6%96%87%E4%BB%B6%E5%90%8D%E9%80%BB%E8%BE%91%EF%BC%880-8-41-1-4-3-1-5-0-1-5-7%EF%BC%89"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">Nginx文件名逻辑（0.8.41 ~ 1.4.3 &#x2F; 1.5.0 ~ 1.5.7）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%99%A8"><span class="nav-number">1.6.</span> <span class="nav-text">编辑器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#waf%E7%BB%95%E8%BF%87"><span class="nav-number">1.7.</span> <span class="nav-text">waf绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="nav-number">1.8.</span> <span class="nav-text">漏洞修复</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xorb_7"
+      src="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
+  <p class="site-author-name" itemprop="name">Xorb_7</p>
+  <div class="site-description" itemprop="description"><font color="#FFFFFF">答案都在路上，自由都在风里...</font></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">笔记</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baqcDevil" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baqcDevil" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/08/File-Upload/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
+      <meta itemprop="name" content="Xorb_7">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xorb_7's Blog">
+      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="File_Upload | Xorb_7's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          File_Upload
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-08 17:40:11" itemprop="dateCreated datePublished" datetime="2024-11-08T17:40:11+08:00">2024-11-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-24 00:03:32" itemprop="dateModified" datetime="2024-11-24T00:03:32+08:00">2024-11-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h1><p><img src="/img/4.jpg" alt="4"></p>
+<blockquote>
+<p><strong>原理：如果对文件上传的路径变量过滤不严，并且对上传文件的后缀或者文件类型限制不严，用户可以通过web访问的目录任意上传文件，包括网站后门文件（webshell），进而远程控制网站服务器</strong></p>
+</blockquote>
+<span id="more"></span>
+
+<p><strong>非常好用的一句话木马：</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?=</span>@<span class="variable">$_</span>=<span class="variable">$_REQUEST</span>;<span class="title function_ invoke__">call_user_func_array</span>(<span class="string">&#x27;assert&#x27;</span>,<span class="keyword">array</span>(<span class="variable">$_</span>[_]));<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="基于文件校验的漏洞"><a href="#基于文件校验的漏洞" class="headerlink" title="基于文件校验的漏洞"></a>基于文件校验的漏洞</h2><h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><h3 id="JS过滤绕过"><a href="#JS过滤绕过" class="headerlink" title="JS过滤绕过"></a>JS过滤绕过</h3><blockquote>
+<p>在网页上写一段Javascript脚本，效验文件上传的后缀名，有白名单形式也有黑名单形式。如果上传文件的后缀不被允许，则会弹窗告知，此时文件上传的数据包并没有发送到服务端，只是在客户端浏览器使用Javascript对数据包进行检测</p>
+</blockquote>
+<p>1.直接禁用js脚本，进行.php上传</p>
+<p>2.页面直接修改js上传文件方法（添加类型等）</p>
+<p>3.抓包改后缀名，绕过前端js校验</p>
+<h2 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h2><h3 id="黑名单"><a href="#黑名单" class="headerlink" title="黑名单"></a>黑名单</h3><h4 id="文件名过滤绕过"><a href="#文件名过滤绕过" class="headerlink" title="文件名过滤绕过"></a>文件名过滤绕过</h4><p>判断文件类型是否为php，如果是，不允许上传。此处没有判断各种大小写的情况，可以用PhP、phP、php3、phtml等多种扩展名绕过文件名过滤</p>
+<h4 id="htaccess文件上传"><a href="#htaccess文件上传" class="headerlink" title=".htaccess文件上传"></a>.htaccess文件上传</h4><p>实现扩展名为.jpg、.png等文件当作php文件解析</p>
+<h5 id="开启htacces配置"><a href="#开启htacces配置" class="headerlink" title="开启htacces配置"></a>开启htacces配置</h5><p>修改配置文件httpd.conf；去掉mod_rewrite.so的注释，开启rewrite模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#修改为下面的代码</span><br><span class="line">&lt;Directory &quot;$&#123;SRVROOT&#125;/htdocs&quot;&gt; </span><br><span class="line">    Options Indexes FollowSymLinks</span><br><span class="line">    </span><br><span class="line">    AllowOverride None (将None改为ALL)</span><br><span class="line">    </span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line"></span><br><span class="line">#去掉注释</span><br><span class="line">LoadModule rewrite_module modules/mod_rewrite.so</span><br></pre></td></tr></table></figure>
+
+<h5 id="利用过程"><a href="#利用过程" class="headerlink" title="利用过程"></a>利用过程</h5><p>1.web站点架构为:php+apache , 保证文件上传到本地 , apache开启对.htaccess支持；</p>
+<p>2.黑名单没有过滤<code>.htaccess</code>;</p>
+<p>3.编辑.htaccess文件,写入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;shell.jpg&quot;&gt;</span><br><span class="line">  SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br><span class="line">//1.这将把目录下的shell.jpg的文件当做可执行的php脚本进行解析并执行。[优先]</span><br><span class="line"></span><br><span class="line">AddType application/x-httpd-php.aaa</span><br><span class="line">//2.上传后缀为.aaa的文件，让其做为php类型文件进行解析</span><br></pre></td></tr></table></figure>
+
+<p>4.上传一句话木马并以.jpg结尾, 写入 <code>&lt;?php @eval($_POST[&#39;pass&#39;]);?&gt;</code></p>
+<h4 id="点绕过"><a href="#点绕过" class="headerlink" title="点绕过"></a>点绕过</h4><p>windows系统下，后缀名的最后一个点会被自动删除掉，所以可以通过在结尾加一个点的方式绕过黑名单。</p>
+<p>Windows 系统下，<strong>文件后缀名最后一个点会被自动去除</strong></p>
+<p>Linux 系统下，文件后缀名<strong>最后一个点不会被自动去除</strong></p>
+<p>利用 BurpSuite 工具截断 HTTP 请求，上传文件后缀名加 <code>.</code> 绕过上传</p>
+<p><strong>使用条件</strong>:<strong>只能在Windows系统下方能生效</strong></p>
+<h4 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h4><p>Windows系统下，对于文件名中空格<code>demo.php(空格)</code>会被作为空处理，程序中的检测代码却不能自动删除空格，从而绕过黑名单</p>
+<p>解释： 文件上传功能过滤不完善，没有考虑到空格的情况，将文件<code>demo.php(空格)</code>认为是以（空格）结尾的特殊文件，允许上传，当文件成功上传到windows系统下时，因为Windows系统特性会被作为空处理，也就是删除文件最后的空格，结果为<code>demo.php</code></p>
+<h4 id="DATA绕过"><a href="#DATA绕过" class="headerlink" title="::$DATA绕过"></a>::$DATA绕过</h4><p>在window系统下，如果上传的文件名为<code>a.php::$DATA</code>，它会在服务器上生成一个<code>a.php</code>的文件，其中内容和所上传内容相同，并被解析。例如:<code>phpinfo.php::$DATA</code>Windows会自动去掉末尾的::$DATA变成<code>phpinfo.php</code>。因此我们在后缀名中添加<code>::$DATA</code>即可绕过</p>
+<p><strong>特别说明：</strong></p>
+<p>注意要在Linux下修改文件名，因为在Windows下创建不了。在windows下，<strong>无法直接测试::$DATA</strong>，因为windows不允许后缀名中存在特殊字符</p>
+<h4 id="双后缀名绕过"><a href="#双后缀名绕过" class="headerlink" title="双后缀名绕过"></a>双后缀名绕过</h4><p>1.文件上传过滤代码，会将<strong>文件名称</strong>进行<strong>敏感字符清除</strong> </p>
+<p>2.文件上传过滤代码，后缀名<strong>黑名单过滤不全面</strong>导致</p>
+<p>例如：如果上传的代码后缀名为<code>.php</code>，那么就将后缀名舍弃；如：<code>a.php——&gt;a</code></p>
+<p><strong>利用示例</strong>:</p>
+<p>对要上传的文件添加重复后缀名，如：<code>a.php——&gt;a.p</code>php<code>hp</code>。过滤掉php后，会重新拼接为新的php</p>
+<p><strong>防御措施:</strong></p>
+<ul>
+<li>使用<strong>递归循环</strong>过滤，不使用<strong>一次过滤</strong></li>
+</ul>
+<h3 id="白名单"><a href="#白名单" class="headerlink" title="白名单"></a>白名单</h3><h4 id="Content-Type过滤绕过（MIME绕过）"><a href="#Content-Type过滤绕过（MIME绕过）" class="headerlink" title="Content-Type过滤绕过（MIME绕过）"></a>Content-Type过滤绕过（MIME绕过）</h4><p>用来告诉我们以什么形式、编码读取此文件。</p>
+<p>上传.php，抓包修改Content-Type，修改为白名单之内的格式</p>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>Content-type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>超文本标记语言文本</td>
+<td>.html,.html text&#x2F;html</td>
+</tr>
+<tr>
+<td>普通文本</td>
+<td>.txt text&#x2F;plain</td>
+</tr>
+<tr>
+<td>RTF文本</td>
+<td>.txt text&#x2F;plain</td>
+</tr>
+<tr>
+<td>GIF图形</td>
+<td>.gif image&#x2F;gif</td>
+</tr>
+<tr>
+<td>JPEG图形</td>
+<td>.jpeg,.jpg image&#x2F;jpeg</td>
+</tr>
+<tr>
+<td>au声音文件</td>
+<td>.au audio&#x2F;basic</td>
+</tr>
+<tr>
+<td>MIDI音乐文件</td>
+<td>.mid,.midi audio&#x2F;midi,audio&#x2F;x-midi</td>
+</tr>
+<tr>
+<td>RealAudio音乐文件</td>
+<td>.ra, .ram audio&#x2F;x-pn-realaudio</td>
+</tr>
+<tr>
+<td>MPEG文件</td>
+<td>.mpg,.mpeg video&#x2F;mpeg</td>
+</tr>
+<tr>
+<td>AVI文件</td>
+<td>.avi video&#x2F;x-msvideo</td>
+</tr>
+<tr>
+<td>GZIP文件</td>
+<td>.gz application&#x2F;x-gzip</td>
+</tr>
+<tr>
+<td>TAR文件</td>
+<td>.tar application&#x2F;x-tar</td>
+</tr>
+</tbody></table>
+<h4 id="文件头过滤绕过"><a href="#文件头过滤绕过" class="headerlink" title="文件头过滤绕过"></a>文件头过滤绕过</h4><p>各个文件都有特定文件头格式，可在木马文件头部添加对应文件头可绕过检测</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>文件头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JPEG（jpeg）</td>
+<td>0xFFD8FF</td>
+</tr>
+<tr>
+<td>PNG（png）</td>
+<td>0x89504E470D0A1A0A</td>
+</tr>
+<tr>
+<td>GIF（gif）</td>
+<td>47 49 46 38 39 61(GIF89a)</td>
+</tr>
+<tr>
+<td>XML (xml)</td>
+<td>3C3F786D6C</td>
+</tr>
+<tr>
+<td>ZIP Archive (zip)</td>
+<td>504B0304</td>
+</tr>
+</tbody></table>
+<p>1.根据允许上传的的文件格式在木面前加上文件头</p>
+<p>2.通过copy命令进行图片木马制作</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">copy</span> <span class="number">1</span>.png/b+<span class="number">1</span>.php/a <span class="number">11</span>.png</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件截断上传"><a href="#文件截断上传" class="headerlink" title="文件截断上传"></a>文件截断上传</h4><p>存在%00这个字符，当PHP版本低于5.3.4就会被当作结束符，导致后面数据被忽略</p>
+<p>如：1.php%00.jpg</p>
+<p>值得注意的是，在GET型00截断中，我们要使用<code>%00</code>来截断，因为GET型提交的内容会被自动进行URL解码；而在POST型00截断中，<code>%00</code>是不会被自动解码的，我们需要在16进制中对其进行修改，将其改为00即可截断</p>
+<p>bp抓包,修改参数，再将.php改为.jpg</p>
+<h2 id="基于文件处理的漏洞"><a href="#基于文件处理的漏洞" class="headerlink" title="基于文件处理的漏洞"></a>基于文件处理的漏洞</h2><h3 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h3><p>指多个线程在没有进行锁操作或同步操作情况下同时访问一个，运行结果依赖于不同线程访问数据的顺序（脏牛漏洞）</p>
+<p>当网站的文件上传的过程是：<code>服务器获取文件–&gt;保存上传临时文件–&gt;重命名移动临时文件</code> 这样的步骤时，我们就可以使用条件竞争来进行绕过，通过不断地对文件进行上传和打开，从而使服务器还未重命名移动临时文件时，我们就利用时间差打开了文件，成功执行其中的php代码</p>
+<p>具体方法：我们可以利用burp不断发包来进行条件竞争，也可以通过python脚本来反复发送请求得到结果。Intruder的payloads中payload type选择Null payloads并发送1000次</p>
+<h3 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h3><p>二次渲染，相当于把原本属于图像数据的部分抓了出来，再用自己的API 或函数进行重新渲染。在该过程中，非图像数据的部分与图像数据会被隔离开</p>
+<p>方法也很简单，我们在十六进制中寻找二次渲染并未改变的部分，在其中插入php代码就好了</p>
+<h2 id="基于文件解析的漏洞（中间件解析）"><a href="#基于文件解析的漏洞（中间件解析）" class="headerlink" title="基于文件解析的漏洞（中间件解析）"></a>基于文件解析的漏洞（中间件解析）</h2><p>文件上传的思路之一，针对网站的中间件爆出的解析漏洞进行文件上传</p>
+<h3 id="IIS篇"><a href="#IIS篇" class="headerlink" title="IIS篇"></a>IIS篇</h3><h4 id="；截断"><a href="#；截断" class="headerlink" title="；截断"></a>；截断</h4><p>当文件名为abc.asp;xx.jpg时，IIS6会将此文件解析成abc.asp，文件名被截断了，从而导致脚本被执行</p>
+<h4 id="IIS6-0版本-处理文件夹拓展名出错"><a href="#IIS6-0版本-处理文件夹拓展名出错" class="headerlink" title="IIS6.0版本 处理文件夹拓展名出错"></a>IIS6.0版本 处理文件夹拓展名出错</h4><p>当建立.asa、.asp格式的文件夹时，其目录下的任意文件都将被IIS<strong>当作为asp文件解析</strong>，如x.asp&#x2F;x.jpg，x.jpg就会被当作asp解析；当上传文件.asp;*.jpg IIS6.0会将文件当做asp文件解析，如x.asp;.x.jpg，x.jpg就会被当作asp解析 </p>
+<h4 id="WebDav漏洞"><a href="#WebDav漏洞" class="headerlink" title="WebDav漏洞"></a>WebDav漏洞</h4><p>WebDav是一种基于HTTP1.1协议的通信协议。在GET、POST、HEAD等HTTP标准方法之外扩展了新方法</p>
+<p>攻击者可以通过PUT方法向服务器上传危险脚本</p>
+<h3 id="APACHE篇"><a href="#APACHE篇" class="headerlink" title="APACHE篇"></a>APACHE篇</h3><h4 id="apache低版本（2-x）"><a href="#apache低版本（2-x）" class="headerlink" title="apache低版本（2.x）"></a>apache低版本（2.x）</h4><p>如果对方中间件是apache属于低版本，我们可以利用文件上传，上传一个不识别的文件后缀，利用解析漏洞规则成功解析文件，其中的后门代码被执行。例如：x.php.aaa.bbb.ccc.ddd,可以被<strong>当作php文件进行解析</strong>，从最后一个.ddd开始，apache不认识，就往前走,一直到.php，这样即绕过了验证，有可以进行解析</p>
+<h4 id="apache换行解析漏洞（2-4-0–2-4-29）"><a href="#apache换行解析漏洞（2-4-0–2-4-29）" class="headerlink" title="apache换行解析漏洞（2.4.0–2.4.29）"></a>apache换行解析漏洞（2.4.0–2.4.29）</h4><p>在解析PHP时，1.php\x0A（或修改后的hex为0a或文件名+%0A）将被按照<strong>PHP后缀进行解析</strong>，导致绕过一些服务器的安全策略</p>
+<p>换行解析案例：CVE-2017-15715 </p>
+<h3 id="NGINX篇"><a href="#NGINX篇" class="headerlink" title="NGINX篇"></a>NGINX篇</h3><h4 id="Nginx低版本、IIS7-x"><a href="#Nginx低版本、IIS7-x" class="headerlink" title="Nginx低版本、IIS7.x"></a>Nginx低版本、IIS7.x</h4><p>上传可以上传的文件，在文件地址后加上&#x2F;x.php，可以让文件以<strong>php代码去执行</strong>。还有一种是对低版本的Nginx可以在任意文件名后面添加%00.php进行解析攻击</p>
+<h4 id="Nginx文件名逻辑（0-8-41-1-4-3-1-5-0-1-5-7）"><a href="#Nginx文件名逻辑（0-8-41-1-4-3-1-5-0-1-5-7）" class="headerlink" title="Nginx文件名逻辑（0.8.41 ~ 1.4.3 &#x2F; 1.5.0 ~ 1.5.7）"></a>Nginx文件名逻辑（0.8.41 ~ 1.4.3 &#x2F; 1.5.0 ~ 1.5.7）</h4><p>我们只需要上传一个空格结尾的文件，即可使PHP解析 nginx.conf配置不当 由此可知，该漏洞与Nginx、php版本无关，属于用户配置不当造成的解析漏洞</p>
+<p>案例：CVE-2013-4547</p>
+<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><p>一些网站会引用编辑器实现文件上传，去网上找爆出的漏洞来实现</p>
+<h2 id="waf绕过"><a href="#waf绕过" class="headerlink" title="waf绕过"></a>waf绕过</h2><p>遇到不同的waf找不同的方法</p>
+<h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><p>1.使用白名单限制文件上传的类型</p>
+<p>2.对上传文件进行随机重命名,并且文件的扩展名不允许用户自定义</p>
+<p>3.对保存上传文件的文件夹进行权限限制,去掉脚本的执行权限</p>
+<p>4.对文件的内容进行恶意代码检测</p>
+
+    </div>
+
+    
+    
+    
+
+<div>
+  
+    
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/05/Command-Injection/" rel="prev" title="Command_Injection&Code_execution">
+                  <i class="fa fa-angle-left"></i> Command_Injection&Code_execution
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/11/File-Inclusion/" rel="next" title="File_Inclusion">
+                  File_Inclusion <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xorb_7</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

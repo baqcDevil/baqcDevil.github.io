@@ -19,25 +19,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="SQL注入漏洞 原理：攻击者通过浏览器或其他客户端将恶意SQL语句插入网站，网站未对其进行过滤，并将恶意SQL语句代入数据库且执行，获取敏感信息或执行其他操作  数字型注入 字符型注入 区别：有无用单引号或双引号 常规查询一、判断常见四个信息 1.数据库版本-看是否符合information_schema查询（MySQL5.0以上自带information_schema） -version 2.数">
+    <meta name="description" content="SQL注入漏洞  原理：攻击者通过浏览器或其他客户端将恶意SQL语句插入网站，网站未对其进行过滤，并将恶意SQL语句代入数据库且执行，获取敏感信息或执行其他操作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL_Injection">
-<meta property="og:url" content="http://example.com/2024/11/23/SQL-Injection/index.html">
+<meta property="og:url" content="http://example.com/2024/11/01/SQL-Injection/index.html">
 <meta property="og:site_name" content="Xorb_7&#39;s Blog">
-<meta property="og:description" content="SQL注入漏洞 原理：攻击者通过浏览器或其他客户端将恶意SQL语句插入网站，网站未对其进行过滤，并将恶意SQL语句代入数据库且执行，获取敏感信息或执行其他操作  数字型注入 字符型注入 区别：有无用单引号或双引号 常规查询一、判断常见四个信息 1.数据库版本-看是否符合information_schema查询（MySQL5.0以上自带information_schema） -version 2.数">
+<meta property="og:description" content="SQL注入漏洞  原理：攻击者通过浏览器或其他客户端将恶意SQL语句插入网站，网站未对其进行过滤，并将恶意SQL语句代入数据库且执行，获取敏感信息或执行其他操作">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="c:\Users\lrq\Desktop\%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\sqlmap%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0.jpg">
-<meta property="article:published_time" content="2024-11-23T04:29:43.000Z">
-<meta property="article:modified_time" content="2024-11-23T08:10:44.895Z">
+<meta property="og:image" content="http://example.com/img/2.jpg">
+<meta property="og:image" content="http://example.com/img/sqlmap%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0.jpg">
+<meta property="article:published_time" content="2024-11-01T04:29:43.000Z">
+<meta property="article:modified_time" content="2024-11-23T15:59:56.008Z">
 <meta property="article:author" content="Xorb_7">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:\Users\lrq\Desktop\%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\sqlmap%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0.jpg">
+<meta name="twitter:image" content="http://example.com/img/2.jpg">
 
 
-<link rel="canonical" href="http://example.com/2024/11/23/SQL-Injection/">
+<link rel="canonical" href="http://example.com/2024/11/01/SQL-Injection/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/23/SQL-Injection/","path":"2024/11/23/SQL-Injection/","title":"SQL_Injection"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/01/SQL-Injection/","path":"2024/11/01/SQL-Injection/","title":"SQL_Injection"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>SQL_Injection | Xorb_7's Blog</title>
@@ -127,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">笔记</span>
         </a>
       </div>
@@ -160,7 +161,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/23/SQL-Injection/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/01/SQL-Injection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
@@ -188,9 +189,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-11-23 12:29:43 / 修改时间：16:10:44" itemprop="dateCreated datePublished" datetime="2024-11-23T12:29:43+08:00">2024-11-23</time>
+      <time title="创建时间：2024-11-01 12:29:43" itemprop="dateCreated datePublished" datetime="2024-11-01T12:29:43+08:00">2024-11-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-23 23:59:56" itemprop="dateModified" datetime="2024-11-23T23:59:56+08:00">2024-11-23</time>
     </span>
 
   
@@ -202,9 +209,12 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="SQL注入漏洞"><a href="#SQL注入漏洞" class="headerlink" title="SQL注入漏洞"></a>SQL注入漏洞</h1><blockquote>
+    <div class="post-body" itemprop="articleBody"><h1 id="SQL注入漏洞"><a href="#SQL注入漏洞" class="headerlink" title="SQL注入漏洞"></a>SQL注入漏洞</h1><p><img src="/img/2.jpg" alt="2"></p>
+<blockquote>
 <p><strong>原理：攻击者通过浏览器或其他客户端将恶意SQL语句插入网站，网站未对其进行过滤，并将恶意SQL语句代入数据库且执行，获取敏感信息或执行其他操作</strong></p>
 </blockquote>
+<span id="more"></span>
+
 <p>数字型注入</p>
 <p>字符型注入</p>
 <p>区别：有无用单引号或双引号</p>
@@ -289,7 +299,7 @@
 <p>addslashes对单引号等字符进行转义，可避免注入</p>
 <h2 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>addslashes函数过滤，将特殊字符进行转义，但特殊字符本身不存入数据库，再次查询时没过滤，造成SQL注入</p>
 <h2 id="SQL注入工具—sqlmap"><a href="#SQL注入工具—sqlmap" class="headerlink" title="SQL注入工具—sqlmap"></a>SQL注入工具—sqlmap</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>sqlmap支持5种模式：bool盲注、sleep盲注、报错注入、union注入、堆查询注入（可同时执行多条语句）</p>
-<h3 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h3><p><img src="C:\Users\lrq\Desktop\学习笔记\sqlmap常用参数.jpg" alt="sqlmap常用参数"></p>
+<h3 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h3><p><img src="/img/sqlmap%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0.jpg" alt="sqlmap常用参数"></p>
 <h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>1、检测注入点</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap <span class="operator">-</span>u <span class="string">&#x27;http://xx/?id=1&#x27;</span></span><br></pre></td></tr></table></figure>
 
@@ -369,12 +379,12 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/11/22/hello-world/" rel="prev" title="Hello World">
-                  <i class="fa fa-angle-left"></i> Hello World
+                <a href="/2024/10/31/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/" rel="prev" title="暴力破解">
+                  <i class="fa fa-angle-left"></i> 暴力破解
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/11/23/Command-Injection/" rel="next" title="Command_Injection&Code_execution">
+                <a href="/2024/11/05/Command-Injection/" rel="next" title="Command_Injection&Code_execution">
                   Command_Injection&Code_execution <i class="fa fa-angle-right"></i>
                 </a>
             </div>
