@@ -931,7 +931,6 @@ pre code {
   line-height: 1.8;
   padding: 0.25em 0.75em;
   text-align: center;
-  transition: all 0.2s ease-out;
 }
 .post-body .tabs ul.nav-tabs li.tab a i[class^='fa'],
 .tabs-comment ul.nav-tabs li.tab a i[class^='fa'] {
@@ -1257,7 +1256,7 @@ pre code {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #252e3b;
+  background: #eed1b5;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
