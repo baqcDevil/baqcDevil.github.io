@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="信息搜集 信息收集也叫做资产收集。信息收集是渗透测试的前期主要工作，是非常重要的环节，收集足够多的信息才能方便接下来的测试，信息收集主要是收集网站的域名信息、子域名信息、目标网站信息、目标网站真实IP、敏感&#x2F;目录文件、开放端口和中间件信息等等。通过各种渠道和手段尽可能收集到多的关于这个站点的信息，有助于我们更多的去找到渗透点，突破口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Information_Collection">
+<meta property="og:url" content="http://example.com/2025/01/16/Information-Collection/index.html">
+<meta property="og:site_name" content="Xorb_7&#39;s Blog">
+<meta property="og:description" content="信息搜集 信息收集也叫做资产收集。信息收集是渗透测试的前期主要工作，是非常重要的环节，收集足够多的信息才能方便接下来的测试，信息收集主要是收集网站的域名信息、子域名信息、目标网站信息、目标网站真实IP、敏感&#x2F;目录文件、开放端口和中间件信息等等。通过各种渠道和手段尽可能收集到多的关于这个站点的信息，有助于我们更多的去找到渗透点，突破口">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/9.jpg">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%861.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%862.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%863.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%864.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%865.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%866.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%867.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%868.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%869.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%8610.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%8611.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%8612.png">
+<meta property="og:image" content="http://example.com/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%8613.png">
+<meta property="article:published_time" content="2025-01-16T14:07:55.000Z">
+<meta property="article:modified_time" content="2025-01-16T14:13:41.665Z">
+<meta property="article:author" content="Xorb_7">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/9.jpg">
+
+
+<link rel="canonical" href="http://example.com/2025/01/16/Information-Collection/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/01/16/Information-Collection/","path":"2025/01/16/Information-Collection/","title":"Information_Collection"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Information_Collection | Xorb_7's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Xorb_7's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-link"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="nav-number">1.</span> <span class="nav-text">信息搜集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%81%E4%B8%9A%E8%B5%84%E4%BA%A7%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.</span> <span class="nav-text">企业资产信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%82%A1%E6%9D%83%E6%8A%95%E8%B5%84%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">股权投资信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.2.</span> <span class="nav-text">公众号信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.3.</span> <span class="nav-text">应用信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E5%9F%9F%E5%90%8D%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.</span> <span class="nav-text">主域名信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ICP%E5%A4%87%E6%A1%88"><span class="nav-number">1.2.1.</span> <span class="nav-text">ICP备案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%87%E6%A1%88%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">备案信息查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AA%E5%A4%87%E6%A1%88%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">未备案信息查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#whois%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.2.</span> <span class="nav-text">whois查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP%E5%8F%8D%E6%9F%A5"><span class="nav-number">1.2.3.</span> <span class="nav-text">IP反查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HOST%E7%A2%B0%E6%92%9E"><span class="nav-number">1.2.4.</span> <span class="nav-text">HOST碰撞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS%E5%85%B1%E4%BA%AB%E8%AE%B0%E5%BD%95"><span class="nav-number">1.2.5.</span> <span class="nav-text">DNS共享记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google%E8%AF%AD%E6%B3%95"><span class="nav-number">1.2.6.</span> <span class="nav-text">Google语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B2%BE%E7%A1%AE%E5%8C%B9%E9%85%8D"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">精确匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%92%E9%99%A4%E5%AD%97%E8%AF%8D"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">排除字词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%85%E5%90%AB%E5%AD%97%E8%AF%8D"><span class="nav-number">1.2.6.3.</span> <span class="nav-text">+包含字词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5%E7%B1%BB%E4%BC%BC%E5%AD%97%E8%AF%8D"><span class="nav-number">1.2.6.4.</span> <span class="nav-text">~加入类似字词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6%E5%AD%97%E8%AF%8D"><span class="nav-number">1.2.6.5.</span> <span class="nav-text">*通配符字词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OR%E9%80%89%E6%8B%A9%E6%80%A7%E5%AD%97%E8%AF%8D%E6%90%9C%E7%B4%A2"><span class="nav-number">1.2.6.6.</span> <span class="nav-text">OR选择性字词搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%95%B0%E5%AD%97%E8%8C%83%E5%9B%B4"><span class="nav-number">1.2.6.7.</span> <span class="nav-text">..搜索数字范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#site%E5%9C%A8%E7%89%B9%E5%AE%9A%E7%BD%91%E7%AB%99%E6%88%96%E5%9F%9F%E5%90%8D%E4%B8%AD%E6%90%9C%E7%B4%A2"><span class="nav-number">1.2.6.8.</span> <span class="nav-text">site在特定网站或域名中搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#inurl%E5%9C%A8%E7%89%B9%E5%AE%9Aurl%E9%93%BE%E6%8E%A5%E4%B8%AD%E6%90%9C%E7%B4%A2"><span class="nav-number">1.2.6.9.</span> <span class="nav-text">inurl在特定url链接中搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#intitle%E5%9C%A8%E7%89%B9%E5%AE%9A%E7%9A%84%E7%BD%91%E9%A1%B5%E6%A0%87%E9%A2%98%E4%B8%AD%E6%90%9C%E7%B4%A2"><span class="nav-number">1.2.6.10.</span> <span class="nav-text">intitle在特定的网页标题中搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#related%E7%9B%B8%E5%85%B3%E7%BD%91%E9%A1%B5%E6%90%9C%E7%B4%A2"><span class="nav-number">1.2.6.11.</span> <span class="nav-text">related相关网页搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Filetype%E5%9C%A8%E7%89%B9%E5%AE%9A%E6%96%87%E6%A1%A3%E6%A0%BC%E5%BC%8F%E4%B8%AD%E6%90%9C%E7%B4%A2"><span class="nav-number">1.2.6.12.</span> <span class="nav-text">Filetype在特定文档格式中搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%8A%80%E8%83%BD%E7%9A%84%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.6.13.</span> <span class="nav-text">搜索技能的组合使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.2.6.14.</span> <span class="nav-text">高级搜索页面</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%97%E6%B5%8B"><span class="nav-number">1.2.7.</span> <span class="nav-text">众测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E5%9F%9F%E5%90%8D%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.</span> <span class="nav-text">子域名信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E7%88%86%E7%A0%B4-%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.3.1.</span> <span class="nav-text">枚举爆破&#x2F;查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS%E5%9F%9F%E4%BC%A0%E9%80%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">DNS域传送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E"><span class="nav-number">1.3.3.</span> <span class="nav-text">搜索引擎</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP%E4%BF%A1%E6%81%AF"><span class="nav-number">1.4.</span> <span class="nav-text">IP信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%95%E8%BF%87CDN"><span class="nav-number">1.4.1.</span> <span class="nav-text">绕过CDN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CDN%E5%88%A4%E6%96%AD"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">CDN判断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%9C%9F%E5%AE%9EIP"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">获取真实IP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E7%BB%87IP%E6%AE%B5"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">组织IP段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C%E6%AE%B5"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">C段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%81%E7%AB%99"><span class="nav-number">1.4.1.5.</span> <span class="nav-text">旁站</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.4.1.6.</span> <span class="nav-text">端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IP%E5%AE%9A%E4%BD%8D"><span class="nav-number">1.4.1.7.</span> <span class="nav-text">IP定位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF"><span class="nav-number">1.5.</span> <span class="nav-text">敏感信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E5%8F%8A%E6%95%8F%E6%84%9F%E6%96%87%E4%BB%B6"><span class="nav-number">1.5.1.</span> <span class="nav-text">目录结构及敏感文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Github%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">1.5.2.</span> <span class="nav-text">Github信息收集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BF%A1%E6%81%AF"><span class="nav-number">1.6.</span> <span class="nav-text">其他信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSINT"><span class="nav-number">1.6.1.</span> <span class="nav-text">OSINT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E9%9A%90%E7%A7%81%E4%BF%A1%E6%81%AF"><span class="nav-number">1.6.2.</span> <span class="nav-text">个人隐私信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%9C%9C%E7%BD%90%E8%AF%86%E5%88%AB"><span class="nav-number">1.6.3.</span> <span class="nav-text">蜜罐识别</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xorb_7"
+      src="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
+  <p class="site-author-name" itemprop="name">Xorb_7</p>
+  <div class="site-description" itemprop="description"><font color="#FFFFFF">答案都在路上，自由都在风里...</font></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">笔记</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baqcDevil" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baqcDevil" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:aimee.lrq@gmail.com" title="E-Mail → mailto:aimee.lrq@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/16/Information-Collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/95856889?s=400&u=aa80da11fcc14ae3054ecbbbe19ee819f8024678&v=4">
+      <meta itemprop="name" content="Xorb_7">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xorb_7's Blog">
+      <meta itemprop="description" content="<font color="#FFFFFF">答案都在路上，自由都在风里...</font>">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Information_Collection | Xorb_7's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Information_Collection
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-01-16 22:07:55 / 修改时间：22:13:41" itemprop="dateCreated datePublished" datetime="2025-01-16T22:07:55+08:00">2025-01-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/img/9.jpg" alt="9"></p>
+<h1 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h1><blockquote>
+<p>信息收集也叫做<strong>资产收集</strong>。信息收集是渗透测试的前期主要工作，是非常重要的环节，收集足够多的信息才能方便接下来的测试，信息收集主要是收集网站的<strong>域名信息、子域名信息、目标网站信息、目标网站真实IP、敏感&#x2F;目录文件、开放端口和中间件信息</strong>等等。通过<strong>各种渠道和手段尽可能收集到多的</strong>关于这个站点的信息，有助于我们更多的去找到渗透点，突破口</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="企业资产信息"><a href="#企业资产信息" class="headerlink" title="企业资产信息"></a>企业资产信息</h2><h3 id="股权投资信息"><a href="#股权投资信息" class="headerlink" title="股权投资信息"></a>股权投资信息</h3><p>天眼查：<a target="_blank" rel="noopener" href="https://www.tianyancha.com/">https://www.tianyancha.com/</a></p>
+<p>爱企查：<a target="_blank" rel="noopener" href="https://aiqicha.baidu.com/">https://aiqicha.baidu.com/</a></p>
+<p>（注意不要开代理）</p>
+<h3 id="公众号信息"><a href="#公众号信息" class="headerlink" title="公众号信息"></a>公众号信息</h3><p>企查查：<a target="_blank" rel="noopener" href="https://www.qcc.com/">https://www.qcc.com/</a></p>
+<p>微信公众号（便捷、快速）</p>
+<h3 id="应用信息"><a href="#应用信息" class="headerlink" title="应用信息"></a>应用信息</h3><p>天眼查：<a target="_blank" rel="noopener" href="https://www.tianyancha.com/">https://www.tianyancha.com/</a></p>
+<p>七麦数据：<a target="_blank" rel="noopener" href="https://www.qimai.cn/">https://www.qimai.cn/</a></p>
+<p>小蓝本（企业）</p>
+<h2 id="主域名信息"><a href="#主域名信息" class="headerlink" title="主域名信息"></a>主域名信息</h2><h3 id="ICP备案"><a href="#ICP备案" class="headerlink" title="ICP备案"></a>ICP备案</h3><blockquote>
+<p>备案的目的就是为了防止在网上从事非法的网站<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BB%8F%E8%90%A5%E6%B4%BB%E5%8A%A8/10128687?fromModule=lemma_inlink">经营活动</a>，打击不良互联网信息的传播，如果网站不备案的话，很有可能被查处以后关停</p>
+</blockquote>
+<p>在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD/106554?fromModule=lemma_inlink">中华人民共和国</a>境内提供非经营性<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BA%92%E8%81%94%E7%BD%91%E4%BF%A1%E6%81%AF%E6%9C%8D%E5%8A%A1/15589594?fromModule=lemma_inlink">互联网信息服务</a>，应当依法履行备案手续。未经备案，不得在中华人民共和国境内从事经营性互联网信息服务</p>
+<h4 id="备案信息查询"><a href="#备案信息查询" class="headerlink" title="备案信息查询"></a>备案信息查询</h4><p>站长工具：<a target="_blank" rel="noopener" href="https://icp.chinaz.com/">https://icp.chinaz.com/</a></p>
+<p>工信部：<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">https://beian.miit.gov.cn/</a></p>
+<p>国外公开数据库：<a target="_blank" rel="noopener" href="https://opencorporates.com/">https://opencorporates.com/</a></p>
+<h4 id="未备案信息查询"><a href="#未备案信息查询" class="headerlink" title="未备案信息查询"></a>未备案信息查询</h4><p>网络空间搜索引擎、证书、IP</p>
+<h3 id="whois查询"><a href="#whois查询" class="headerlink" title="whois查询"></a><strong>whois查询</strong></h3><p>域名在注册的时候，需要填入个人或者企业信息，如果<strong>没有设置隐藏属性</strong>可以查询出来，通过备案号查询个人或者企业信息，也可以whois反查注册人邮箱、电话、机构、反查更多得域名和需要的信息</p>
+<p>站长之家：<a target="_blank" rel="noopener" href="https://whois.chinaz.com/">https://whois.chinaz.com/</a></p>
+<p>who.is：<a target="_blank" rel="noopener" href="https://who.is/">https://who.is/</a></p>
+<p>IP138网站：<a target="_blank" rel="noopener" href="https://www.ip138.com/">https://www.ip138.com/</a></p>
+<p>狗狗查询：<a target="_blank" rel="noopener" href="https://www.ggcx.com/">https://www.ggcx.com/</a></p>
+<p>ICANN|LOOKUP：<a target="_blank" rel="noopener" href="https://lookup.icann.org/zh/">https://lookup.icann.org/zh/</a></p>
+<h3 id="IP反查"><a href="#IP反查" class="headerlink" title="IP反查"></a>IP反查</h3><p>站长之家：<a target="_blank" rel="noopener" href="https://whois.chinaz.com/">https://whois.chinaz.com/</a></p>
+<p>DNSlytics：<a target="_blank" rel="noopener" href="https://dnslytics.com/">https://dnslytics.com/</a></p>
+<p>搜索引擎：</p>
+<p>FOFA：<a target="_blank" rel="noopener" href="https://en.fofa.info/">https://en.fofa.info/</a></p>
+<p>Zoomeye：<a target="_blank" rel="noopener" href="https://www.zoomeye.ai/">https://www.zoomeye.ai/</a></p>
+<p>Hunter：<a target="_blank" rel="noopener" href="https://hunter.io/">https://hunter.io/</a></p>
+<p>零零信安：<a target="_blank" rel="noopener" href="https://0.zone/">https://0.zone/</a></p>
+<p>普通搜索引擎：Google、Bing</p>
+<h3 id="HOST碰撞"><a href="#HOST碰撞" class="headerlink" title="HOST碰撞"></a>HOST碰撞</h3><blockquote>
+<p>当一些域名只允许在内网访问时，可通过这种碰撞直接突破边界限制，访问到内网系统进行下一步渗透测试</p>
+</blockquote>
+<p>通过对 <strong>IP</strong> 和 <strong>域名</strong> 碰撞匹配，访问到绑定host才能访问的系统，当直接访问IP回显4xx错误，直接指定HOST头为某个域名时访问该IP回显正常时，可判断可进行HOSTS碰撞</p>
+<p><strong>利用</strong></p>
+<p>1.最主要的是搜集指向内网IP的域名，可以通过OneForAll等工具搜集一些子域名，挑选出指向内网IP的域名，把这些内网IP对应的域名进行搜集</p>
+<p>OneForAll：<a target="_blank" rel="noopener" href="https://github.com/shmilylty/OneForAll/">https://github.com/shmilylty/OneForAll/</a></p>
+<p>2.然后搜集目标资产的IP，探测Web服务。探测web服务可以使用goby</p>
+<p>goby：<a target="_blank" rel="noopener" href="https://gobies.org/">https://gobies.org/</a></p>
+<p>将探测到开放WEB服务的IP资产搜集起来。</p>
+<p>3.然后通过Hosts_scan，将搜集到的域名和IP分别放入hosts.txt和ip.txt（也可以在host中添加一些内网办公系统常用的子域名）运行，通过对比数据包大小和标题即可得到匹配成功的Host头与对应IP</p>
+<p>Hosts_scan：<a target="_blank" rel="noopener" href="https://github.com/fofapro/Hosts_scan/">https://github.com/fofapro/Hosts_scan/</a></p>
+<p>也可对某个IP的Host头的值进行Fuzz</p>
+<p>4.然后在Burp Proxy中的Options选项中设置好Host头的Replace规则</p>
+<p>5.配置好并启用后通过浏览器设置Burp代理访问该IP后即可访问设置的内网系统，可对内网系统进一步进行渗透测试</p>
+<p><strong>工具</strong></p>
+<p>灯塔</p>
+<p>水泽</p>
+<p>HostScan：<a target="_blank" rel="noopener" href="https://github.com/cckuailong/hostscan/">https://github.com/cckuailong/hostscan/</a></p>
+<p>Hosts_Scan：<a target="_blank" rel="noopener" href="https://github.com/fofapro/Hosts_scan/">https://github.com/fofapro/Hosts_scan/</a></p>
+<p>Host_Scan：<a target="_blank" rel="noopener" href="https://github.com/smxiazi/host_scan/">https://github.com/smxiazi/host_scan/</a></p>
+<h3 id="DNS共享记录"><a href="#DNS共享记录" class="headerlink" title="DNS共享记录"></a>DNS共享记录</h3><p>查询是否存在自建DNS服务器</p>
+<p>查询：<a target="_blank" rel="noopener" href="https://hackertarget.com/find-shared-dns-servers">https://hackertarget.com/find-shared-dns-servers</a></p>
+<h3 id="Google语法"><a href="#Google语法" class="headerlink" title="Google语法"></a>Google语法</h3><blockquote>
+<p>Google是全球最大的搜索引擎公司，每天处理数以亿计的搜索请求。灵活运用google搜索技巧可以帮助我们更快速更准确的在浩瀚的互联网中找到需要的信息</p>
+</blockquote>
+<h4 id="精确匹配"><a href="#精确匹配" class="headerlink" title="精确匹配"></a>精确匹配</h4><p>使用引号来搜索一个完全匹配的字词或一组字词。在搜索歌词或文学作品中的一段文字时，此选项很实用。只在查找非常确切的字词或词组时使用该功能，否则可能会无意中排除掉有用的搜索结果</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%861.png" alt="信息搜集1"></p>
+<h4 id="排除字词"><a href="#排除字词" class="headerlink" title="排除字词"></a>排除字词</h4><p>在某个字词前添加短横 (-) 可排除所有包含该字词的搜索结果</p>
+<p>图图不出现大耳朵：</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%862.png" alt="信息搜集2"></p>
+<h4 id="包含字词"><a href="#包含字词" class="headerlink" title="+包含字词"></a>+包含字词</h4><p>在某个字词前添加加号 (+) 必需包含含该字词的搜索结果</p>
+<p>图图出现大耳朵：</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%863.png" alt="信息搜集3"></p>
+<h4 id="加入类似字词"><a href="#加入类似字词" class="headerlink" title="~加入类似字词"></a>~加入类似字词</h4><p>Google 可能会使用同义词代替原始查询中的某些字词。在字词前添加腭化符号 (~) 可同时搜索该字词及其同义词</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%864.png" alt="信息搜集4"></p>
+<h4 id="通配符字词"><a href="#通配符字词" class="headerlink" title="*通配符字词"></a>*通配符字词</h4><p>搜索词中不确定的部分可以用星号*代替，google会匹配相关词。字词忘记或者不确定某些搜索词的情况下非常有用</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%865.png" alt="信息搜集5"></p>
+<h4 id="OR选择性字词搜索"><a href="#OR选择性字词搜索" class="headerlink" title="OR选择性字词搜索"></a>OR选择性字词搜索</h4><p>选择性字词OR搜索结果匹配多个搜索字词中的任意一个。没有OR搜索结果中通常只会显示与多个字词都匹配的网页</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%866.png" alt="信息搜集6"></p>
+<h4 id="搜索数字范围"><a href="#搜索数字范围" class="headerlink" title="..搜索数字范围"></a>..搜索数字范围</h4><p>用两个半角句号（不加空格）隔开两个数字可查看日期、价格和尺寸等指定数字范围的搜索结果</p>
+<p>提示：仅使用一个数字和两个句号即可表示上限或下限</p>
+<p>数值之间的符号是两个英文句号加一个空格键</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%867.png" alt="信息搜集7"></p>
+<h4 id="site在特定网站或域名中搜索"><a href="#site在特定网站或域名中搜索" class="headerlink" title="site在特定网站或域名中搜索"></a>site在特定网站或域名中搜索</h4><p>在搜索中加入“site:”可以限定在在某个特定网站中搜索信息</p>
+<p>“site:”后面跟的站点域名，不要带“http:&#x2F;&#x2F;”。site:和站点名之间，不要带空格</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%868.png" alt="信息搜集8"></p>
+<h4 id="inurl在特定url链接中搜索"><a href="#inurl在特定url链接中搜索" class="headerlink" title="inurl在特定url链接中搜索"></a>inurl在特定url链接中搜索</h4><p>在搜索中加入“inurl:”可以限定在网站url链接中搜索网站信息</p>
+<p>exo inurl:music搜索词“exo”是可以出现在网页的任何位置，而“music”则必须出现在网页url中</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%869.png" alt="信息搜集9"></p>
+<h4 id="intitle在特定的网页标题中搜索"><a href="#intitle在特定的网页标题中搜索" class="headerlink" title="intitle在特定的网页标题中搜索"></a>intitle在特定的网页标题中搜索</h4><p>在搜索中加入“intitle：”可以限定在网页标题title中搜索网站信息</p>
+<p>intitle:和后面的关键词之间不要有空格。</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%8610.png" alt="信息搜集10"></p>
+<h4 id="related相关网页搜索"><a href="#related相关网页搜索" class="headerlink" title="related相关网页搜索"></a>related相关网页搜索</h4><p>在搜索中加入“related:”可以搜索与指定网站有相似内容的网页</p>
+<p>related:baidu.com可以搜索和百度类似的网站</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%8611.png" alt="信息搜集11"></p>
+<h4 id="Filetype在特定文档格式中搜索"><a href="#Filetype在特定文档格式中搜索" class="headerlink" title="Filetype在特定文档格式中搜索"></a>Filetype在特定文档格式中搜索</h4><p>在搜索中加入“Filetype:”可以限定在文档格式中搜索网页信息，支持文档格式有pdf，ps,dwf, kml, kmz, doc，xls，ppt，rtf,swf,all(所有上面的文档格式)。对于找文档资料相当有帮助</p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%8612.png" alt="信息搜集12"></p>
+<h4 id="搜索技能的组合使用"><a href="#搜索技能的组合使用" class="headerlink" title="搜索技能的组合使用"></a><strong>搜索技能的组合使用</strong></h4><p>可以对上述所有搜索技能进行组合运用，以便按照自己的意愿缩小或者扩展搜索范围。尽管有些技能或许并不常用，但准确搜索和站内搜索这些技能的使用范围还是相当广泛的</p>
+<h4 id="高级搜索页面"><a href="#高级搜索页面" class="headerlink" title="高级搜索页面"></a>高级搜索页面</h4><p>通过直接访问<a target="_blank" rel="noopener" href="http://www.google.com.hk/advanced_search%E7%BD%91%E5%9D%80%EF%BC%8C%E5%9C%A8%E8%B0%B7%E6%AD%8C%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E9%A1%B5%E9%9D%A2%E5%B0%86%E4%B8%8A%E9%9D%A2%E7%9A%84%E6%89%80%E6%9C%89%E7%9A%84%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95%E9%9B%86%E6%88%90%EF%BC%8C%E7%94%A8%E6%88%B7%E4%B8%8D%E9%9C%80%E8%A6%81%E8%AE%B0%E5%BF%86%E8%AF%AD%E6%B3%95%EF%BC%8C%E5%8F%AA%E9%9C%80%E8%A6%81%E5%A1%AB%E5%86%99%E6%90%9C%E7%B4%A2%E8%AF%8D%E5%92%8C%E9%80%89%E6%8B%A9%E7%9B%B8%E5%85%B3%E9%80%89%E9%A1%B9%E5%B0%B1%E8%83%BD%E5%AE%8C%E6%88%90%E5%A4%8D%E6%9D%82%E7%9A%84%E8%AF%AD%E6%B3%95%E6%90%9C%E7%B4%A2">http://www.google.com.hk/advanced_search网址，在谷歌高级搜索页面将上面的所有的高级语法集成，用户不需要记忆语法，只需要填写搜索词和选择相关选项就能完成复杂的语法搜索</a></p>
+<p><img src="/img/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%8613.png" alt="信息搜集13"></p>
+<p>随着 Google 等搜索引擎对于用户自然语言的理解程度与日俱增，这些搜索技能可以派上用场的情况或许将会变得越来越少，至少这是所有搜索引擎共同追求的目标。但是在当下，掌握这些搜索技能还是非常必要的</p>
+<h3 id="众测"><a href="#众测" class="headerlink" title="众测"></a>众测</h3><p>补天、漏洞银行、先知、火线、漏洞盒子、CNVD</p>
+<h2 id="子域名信息"><a href="#子域名信息" class="headerlink" title="子域名信息"></a>子域名信息</h2><h3 id="枚举爆破-查询"><a href="#枚举爆破-查询" class="headerlink" title="枚举爆破&#x2F;查询"></a>枚举爆破&#x2F;查询</h3><p>在线：</p>
+<p>站长之家-子域名查询：<a target="_blank" rel="noopener" href="https://tool.chinaz.com/subdomain/?domain=/">https://tool.chinaz.com/subdomain/?domain=/</a></p>
+<p>Google语法：site:xxx.com</p>
+<p>DNSdumpster：<a target="_blank" rel="noopener" href="https://dnsdumpster.com/">https://dnsdumpster.com/</a></p>
+<p>VirusTotal：<a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/home/search">https://www.virustotal.com/gui/home/search</a></p>
+<p><a target="_blank" rel="noopener" href="https://phonebook.cz/%EF%BC%88%E5%88%86%E6%9E%90%E5%8F%AF%E7%96%91%E6%96%87%E4%BB%B6%E3%80%81%E5%9F%9F%E3%80%81IP">https://phonebook.cz/（分析可疑文件、域、IP</a> 和 URL 以检测恶意软件和其他漏洞，并自动与安全社区共享）</p>
+<p>字典：</p>
+<p>普通的字母数字组合、常用词组</p>
+<p>其他字典</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/k8gege/PasswordDic/">https://github.com/k8gege/PasswordDic/</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/DNSPod/oh-my-free-data/tree/master/src/">https://github.com/DNSPod/oh-my-free-data/tree/master/src/</a></p>
+<h3 id="DNS域传送"><a href="#DNS域传送" class="headerlink" title="DNS域传送"></a>DNS域传送</h3><p>DNS域传送指的是一台备用服务器使用来自主服务器的数据刷新自己的域（zone）数据库，目的是为了做冗余备份，防止主服务器出现故障时 dns 解析不可用。然而主服务器对来请求的备用服务器未作访问控制，验证身份就做出相应故而出现这个漏洞。</p>
+<p><strong>windows 利用方式：</strong></p>
+<p>nslookup</p>
+<p>查询nameserver</p>
+<p>nslookup -type&#x3D;ns knownsec.com 119.29.29.29</p>
+<p>指定nameserver，列举域名信息</p>
+<p>nslookup</p>
+<p>server f1g1ns1.dnspod.net</p>
+<p>ls knownsec.com</p>
+<p><strong>Linux</strong> <strong>利用方式：</strong></p>
+<p>dig axfr @f1g1ns2.dnspod.net knownsec.com</p>
+<p><strong>nmap</strong></p>
+<p>nmap –script dns-zone-transfer –script-args dns-zone-transfer.domain&#x3D;knownsec.com -p 53 -Pn f1g1ns1.dnspod.net</p>
+<p><strong>python</strong></p>
+<p>DNS库</p>
+<h3 id="搜索引擎"><a href="#搜索引擎" class="headerlink" title="搜索引擎"></a>搜索引擎</h3><p>FOFA：<a target="_blank" rel="noopener" href="https://en.fofa.info/">https://en.fofa.info/</a></p>
+<p>Zoomeye：<a target="_blank" rel="noopener" href="https://www.zoomeye.ai/">https://www.zoomeye.ai/</a></p>
+<p>Hunter：<a target="_blank" rel="noopener" href="https://hunter.io/">https://hunter.io/</a></p>
+<p>知风：<a target="_blank" rel="noopener" href="https://zhifeng.io/web/new/">https://zhifeng.io/web/new/</a></p>
+<p>零零信安：<a target="_blank" rel="noopener" href="https://0.zone/">https://0.zone/</a></p>
+<h2 id="IP信息"><a href="#IP信息" class="headerlink" title="IP信息"></a>IP信息</h2><h3 id="绕过CDN"><a href="#绕过CDN" class="headerlink" title="绕过CDN"></a>绕过CDN</h3><h4 id="CDN判断"><a href="#CDN判断" class="headerlink" title="CDN判断"></a>CDN判断</h4><p>多地ping</p>
+<p>nslookup</p>
+<p>在线：</p>
+<p>CDN Planet：<a target="_blank" rel="noopener" href="https://www.cdnplanet.com/">https://www.cdnplanet.com/</a></p>
+<p>IPIP：<a target="_blank" rel="noopener" href="https://tools.ipip.net/">https://tools.ipip.net/</a></p>
+<p>whatsmydns.net：<a target="_blank" rel="noopener" href="https://www.whatsmydns.net/">https://www.whatsmydns.net/</a></p>
+<h4 id="获取真实IP"><a href="#获取真实IP" class="headerlink" title="获取真实IP"></a>获取真实IP</h4><p><strong>DNS历史绑定记录</strong></p>
+<p>Viewdns.info：<a target="_blank" rel="noopener" href="https://viewdns.info/">https://viewdns.info/</a></p>
+<p>netcraft：<a target="_blank" rel="noopener" href="https://sitereport.netcraft.com/?url=">https://sitereport.netcraft.com/?url=</a></p>
+<p>情报社区：<a target="_blank" rel="noopener" href="https://x.threatbook.com/">https://x.threatbook.com/</a></p>
+<p>SecurityTrails：<a target="_blank" rel="noopener" href="https://securitytrails.com/">https://securitytrails.com/</a></p>
+<p>查询网：<a target="_blank" rel="noopener" href="https://site.ip138.com/">https://site.ip138.com/</a></p>
+<p><strong>子域名</strong></p>
+<p><strong>异地ping</strong></p>
+<p><strong>SSL证书</strong></p>
+<p><strong>CDN配置</strong></p>
+<p><strong>漏洞</strong></p>
+<p>SSRF等漏洞</p>
+<p>本身对外请求的业务</p>
+<p>异常信息</p>
+<p>调试信息</p>
+<p><strong>邮件头</strong></p>
+<p><strong>Hosts碰撞</strong></p>
+<p><strong>应用程序</strong></p>
+<p>小程序</p>
+<p>APP</p>
+<p><strong>F5 LTM解码法</strong></p>
+<p>当服务器使用F5 LTM做负载均衡时，通过对set-cookie关键字的解码真实ip也可被获取，例如：Set-Cookie: BIGipServerpool_8.29_8030&#x3D;487098378.24095.0000，先把第一小节的十进制数即487098378取出来，然后将其转为十六进制数1d08880a，接着从后至前，以此取四位数出来，也就是0a.88.08.1d，最后依次把他们转为十进制数10.136.8.29，也就是最后的真实ip。</p>
+<p><strong>前端JS泄露IP</strong></p>
+<h4 id="组织IP段"><a href="#组织IP段" class="headerlink" title="组织IP段"></a>组织IP段</h4><h4 id="C段"><a href="#C段" class="headerlink" title="C段"></a>C段</h4><p>Goby：<a target="_blank" rel="noopener" href="https://gobies.org/">https://gobies.org/</a></p>
+<p>Fscan：<a target="_blank" rel="noopener" href="https://github.com/shadow1ng/fscan/">https://github.com/shadow1ng/fscan/</a></p>
+<p>潮汐指纹：<a target="_blank" rel="noopener" href="http://finger.tidesec.com/">http://finger.tidesec.com/</a></p>
+<h4 id="旁站"><a href="#旁站" class="headerlink" title="旁站"></a>旁站</h4><h4 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h4><h4 id="IP定位"><a href="#IP定位" class="headerlink" title="IP定位"></a>IP定位</h4><p>openGPS.cn：<a target="_blank" rel="noopener" href="https://www.opengps.cn/">https://www.opengps.cn/</a></p>
+<p>chaipip：<a target="_blank" rel="noopener" href="https://www.chaipip.com/">https://www.chaipip.com/</a></p>
+<h2 id="敏感信息"><a href="#敏感信息" class="headerlink" title="敏感信息"></a>敏感信息</h2><h3 id="目录结构及敏感文件"><a href="#目录结构及敏感文件" class="headerlink" title="目录结构及敏感文件"></a>目录结构及敏感文件</h3><p>工具</p>
+<p>feroxbuster：<a target="_blank" rel="noopener" href="https://github.com/epi052/feroxbuster/">https://github.com/epi052/feroxbuster/</a></p>
+<p>dirmap：<a target="_blank" rel="noopener" href="https://github.com/H4ckForJob/dirmap">https://github.com/H4ckForJob/dirmap</a></p>
+<p>字典</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/TheKingOfDuck/fuzzDicts">https://github.com/TheKingOfDuck/fuzzDicts</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/gh0stkey/Web-Fuzzing-Box">https://github.com/gh0stkey/Web-Fuzzing-Box</a></p>
+<h3 id="Github信息收集"><a href="#Github信息收集" class="headerlink" title="Github信息收集"></a>Github信息收集</h3><p>Github搜索语法</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/search/advanced">https://github.com/search/advanced</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.github.com/zh/search-github/getting-started-with-searching-on-github/about-searching-on-github">https://docs.github.com/zh/search-github/getting-started-with-searching-on-github/about-searching-on-github</a></p>
+<p>工具</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/obheda12/GitDorker">https://github.com/obheda12/GitDorker</a></p>
+<p>代码仓库在线搜索平台</p>
+<p>searchcode：<a target="_blank" rel="noopener" href="https://searchcode.com/">https://searchcode.com/</a></p>
+<p>gitcode：<a target="_blank" rel="noopener" href="https://gitcode.net/explore">https://gitcode.net/explore</a></p>
+<h2 id="其他信息"><a href="#其他信息" class="headerlink" title="其他信息"></a>其他信息</h2><h3 id="OSINT"><a href="#OSINT" class="headerlink" title="OSINT"></a>OSINT</h3><p>情报资源</p>
+<p>Digital-Privacy：<a target="_blank" rel="noopener" href="https://github.com/ffffffff0x/Digital-Privacy">https://github.com/ffffffff0x/Digital-Privacy</a></p>
+<p>开源情报框架：<a target="_blank" rel="noopener" href="https://osintframework.com/">https://osintframework.com/</a></p>
+<p>情报工具</p>
+<p>intelligence：<a target="_blank" rel="noopener" href="https://intelx.io/">https://intelx.io/</a></p>
+<p>SocialPath：<a target="_blank" rel="noopener" href="https://github.com/woj-ciech/SocialPath">https://github.com/woj-ciech/SocialPath</a></p>
+<p>reconspider：<a target="_blank" rel="noopener" href="https://github.com/bhavsec/reconspider">https://github.com/bhavsec/reconspider</a></p>
+<h3 id="个人隐私信息"><a href="#个人隐私信息" class="headerlink" title="个人隐私信息"></a>个人隐私信息</h3><p>从邮箱查询</p>
+<p>REG007：<a target="_blank" rel="noopener" href="https://www.reg007.com/">https://www.reg007.com/</a></p>
+<p>从用户名查询</p>
+<p>WhatsMyName：<a target="_blank" rel="noopener" href="https://whatsmyname.app/">https://whatsmyname.app/</a></p>
+<p>namecheckup：<a target="_blank" rel="noopener" href="https://namecheckup.com/">https://namecheckup.com/</a></p>
+<p>sherlock：<a target="_blank" rel="noopener" href="https://github.com/sherlock-project/sherlock">https://github.com/sherlock-project/sherlock</a></p>
+<p>从IP查询</p>
+<p>iknow：<a target="_blank" rel="noopener" href="https://iknowwhatyoudownload.com/en/peer/">https://iknowwhatyoudownload.com/en/peer/</a></p>
+<h3 id="蜜罐识别"><a href="#蜜罐识别" class="headerlink" title="蜜罐识别"></a>蜜罐识别</h3><p>Heimdallr：<a target="_blank" rel="noopener" href="https://github.com/Ghr07h/Heimdallr">https://github.com/Ghr07h/Heimdallr</a></p>
+
+    </div>
+
+    
+    
+    
+
+<div>
+  
+    
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/28/Domain-Environment/" rel="prev" title="搭建域环境">
+                  <i class="fa fa-angle-left"></i> 搭建域环境
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xorb_7</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
